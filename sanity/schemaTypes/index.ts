@@ -11,6 +11,7 @@ import {
   articleItem,
   categoryItem,
   faqItem,
+  iconedItem,
   navItem,
   serviceDomain,
   textBlock,
@@ -18,6 +19,7 @@ import {
   titledItem,
   whatsappStep,
 } from "./objects";
+import { serviceDetailPage } from "./serviceDetail";
 import { siteSettings } from "./siteSettings";
 
 export const schemaTypes = [
@@ -28,6 +30,7 @@ export const schemaTypes = [
   faqItem,
   textBlock,
   serviceDomain,
+  iconedItem,
   articleItem,
   categoryItem,
   whatsappStep,
@@ -39,6 +42,7 @@ export const schemaTypes = [
   approachPage,
   informationsPage,
   contactPage,
+  serviceDetailPage,
 ];
 
 export const singletonTypes = new Set([

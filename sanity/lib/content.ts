@@ -272,3 +272,101 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
     return { translations: { en: blankTranslations(), fr: blankTranslations() }, links: emptyLinks };
   }
 });
+
+// ============================================================
+// Service detail pages (/services/[slug])
+// ============================================================
+
+export type ServiceDetail = {
+  slug: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  heroLabel: string;
+  heroTitle: string;
+  heroTitleAccent?: string;
+  heroText: string;
+  heroImage?: string;
+  stats: { title: string }[];
+  introTitle?: string;
+  introText?: string;
+  treatmentsTitle?: string;
+  treatments: { title: string; description: string; icon?: string }[];
+  benefitsTitle?: string;
+  benefits: { title: string; description: string }[];
+  processLabel?: string;
+  processTitle?: string;
+  processSteps: { title: string; description: string }[];
+  galleryImage1?: string;
+  galleryImage2?: string;
+  faqLabel?: string;
+  faqTitle?: string;
+  faqs: { question: string; answer: string }[];
+  ctaTitle?: string;
+  ctaText?: string;
+  ctaHref?: string;
+};
+
+const SERVICE_SLUGS_QUERY = `*[_type == "serviceDetailPage" && defined(slug.current)].slug.current`;
+
+const SERVICE_DETAIL_QUERY = `*[_type == "serviceDetailPage" && slug.current == $slug][0]`;
+
+export const getServiceSlugs = cache(async (): Promise<string[]> => {
+  if (!isSanityConfigured) return [];
+  try {
+    return await client.fetch<string[]>(SERVICE_SLUGS_QUERY, {}, { next: { revalidate: 30 } });
+  } catch {
+    return [];
+  }
+});
+
+export const getServiceDetail = cache(
+  async (slug: string, locale: Locale): Promise<ServiceDetail | null> => {
+    if (!isSanityConfigured) return null;
+    try {
+      const data = await client.fetch<Record<string, unknown> | null>(
+        SERVICE_DETAIL_QUERY,
+        { slug },
+        { next: { revalidate: 30 } },
+      );
+      if (!data) return null;
+      const mapped = fromCms(data, locale);
+      if (!isRecord(mapped)) return null;
+      return {
+        slug,
+        metaTitle: typeof mapped.metaTitle === "string" ? mapped.metaTitle : undefined,
+        metaDescription: typeof mapped.metaDescription === "string" ? mapped.metaDescription : undefined,
+        heroLabel: typeof mapped.heroLabel === "string" ? mapped.heroLabel : "",
+        heroTitle: typeof mapped.heroTitle === "string" ? mapped.heroTitle : "",
+        heroTitleAccent: typeof mapped.heroTitleAccent === "string" ? mapped.heroTitleAccent : undefined,
+        heroText: typeof mapped.heroText === "string" ? mapped.heroText : "",
+        heroImage: typeof mapped.heroImage === "string" ? mapped.heroImage : undefined,
+        stats: Array.isArray(mapped.stats) ? (mapped.stats as { title: string }[]) : [],
+        introTitle: typeof mapped.introTitle === "string" ? mapped.introTitle : undefined,
+        introText: typeof mapped.introText === "string" ? mapped.introText : undefined,
+        treatmentsTitle: typeof mapped.treatmentsTitle === "string" ? mapped.treatmentsTitle : undefined,
+        treatments: Array.isArray(mapped.treatments)
+          ? (mapped.treatments as { title: string; description: string; icon?: string }[])
+          : [],
+        benefitsTitle: typeof mapped.benefitsTitle === "string" ? mapped.benefitsTitle : undefined,
+        benefits: Array.isArray(mapped.benefits)
+          ? (mapped.benefits as { title: string; description: string }[])
+          : [],
+        processLabel: typeof mapped.processLabel === "string" ? mapped.processLabel : undefined,
+        processTitle: typeof mapped.processTitle === "string" ? mapped.processTitle : undefined,
+        processSteps: Array.isArray(mapped.processSteps)
+          ? (mapped.processSteps as { title: string; description: string }[])
+          : [],
+        galleryImage1: typeof mapped.galleryImage1 === "string" ? mapped.galleryImage1 : undefined,
+        galleryImage2: typeof mapped.galleryImage2 === "string" ? mapped.galleryImage2 : undefined,
+        faqLabel: typeof mapped.faqLabel === "string" ? mapped.faqLabel : undefined,
+        faqTitle: typeof mapped.faqTitle === "string" ? mapped.faqTitle : undefined,
+        faqs: Array.isArray(mapped.faqs) ? (mapped.faqs as { question: string; answer: string }[]) : [],
+        ctaTitle: typeof mapped.ctaTitle === "string" ? mapped.ctaTitle : undefined,
+        ctaText: typeof mapped.ctaText === "string" ? mapped.ctaText : undefined,
+        ctaHref: typeof mapped.ctaHref === "string" ? mapped.ctaHref : undefined,
+      };
+    } catch {
+      return null;
+    }
+  },
+);

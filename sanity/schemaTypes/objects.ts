@@ -16,6 +16,31 @@ export const titledItem = defineType({
   preview: bilingualPreview,
 });
 
+const TREATMENT_ICONS = [
+  "stethoscope", "heart", "droplet", "sparkles", "vaccine", "activity",
+  "waveSine", "clipboardList", "certificate", "apple", "needle", "bandage",
+  "mask", "flame", "moodSmile", "bath", "sun", "shieldCheck",
+  "microscope", "scissors", "massage", "yoga",
+];
+
+export const iconedItem = defineType({
+  name: "iconedItem",
+  title: "Treatment",
+  type: "object",
+  fields: [
+    localizedString("title", "Title"),
+    localizedText("description", "Description"),
+    defineField({
+      name: "icon",
+      title: "Icon",
+      type: "string",
+      options: { list: TREATMENT_ICONS, layout: "dropdown" },
+      initialValue: "stethoscope",
+    }),
+  ],
+  preview: bilingualPreview,
+});
+
 export const titledDescription = defineType({
   name: "titledDescription",
   title: "Item",

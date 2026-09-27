@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
+import { getServiceSlugs } from "@/sanity/lib/content";
 
 const routes: Array<{ path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }> = [
   { path: "/", priority: 1, changeFrequency: "weekly" },
@@ -10,12 +11,22 @@ const routes: Array<{ path: string; priority: number; changeFrequency: MetadataR
   { path: "/contact", priority: 0.8, changeFrequency: "monthly" },
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
-  return routes.map((route) => ({
+  const staticEntries = routes.map((route) => ({
     url: `${SITE_URL}${route.path}`,
     lastModified,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
+
+  const serviceSlugs = await getServiceSlugs();
+  const serviceEntries = serviceSlugs.map((slug) => ({
+    url: `${SITE_URL}/services/${slug}`,
+    lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.85,
+  }));
+
+  return [...staticEntries, ...serviceEntries];
 }

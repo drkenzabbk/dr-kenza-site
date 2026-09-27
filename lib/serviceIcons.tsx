@@ -1,0 +1,55 @@
+import {
+  IconStethoscope,
+  IconHeart,
+  IconDroplet,
+  IconSparkles,
+  IconVaccine,
+  IconActivity,
+  IconWaveSine,
+  IconClipboardList,
+  IconCertificate,
+  IconApple,
+  IconNeedle,
+  IconBandage,
+  IconMask,
+  IconFlame,
+  IconMoodSmile,
+  IconBath,
+  IconSun,
+  IconShieldCheck,
+  IconMicroscope,
+  IconScissors,
+  IconMassage,
+  IconYoga,
+  type IconProps,
+} from "@tabler/icons-react";
+import type { ComponentType } from "react";
+
+export const TREATMENT_ICON_MAP: Record<string, ComponentType<IconProps>> = {
+  stethoscope: IconStethoscope,
+  heart: IconHeart,
+  droplet: IconDroplet,
+  sparkles: IconSparkles,
+  vaccine: IconVaccine,
+  activity: IconActivity,
+  waveSine: IconWaveSine,
+  clipboardList: IconClipboardList,
+  certificate: IconCertificate,
+  apple: IconApple,
+  needle: IconNeedle,
+  bandage: IconBandage,
+  mask: IconMask,
+  flame: IconFlame,
+  moodSmile: IconMoodSmile,
+  bath: IconBath,
+  sun: IconSun,
+  shieldCheck: IconShieldCheck,
+  microscope: IconMicroscope,
+  scissors: IconScissors,
+  massage: IconMassage,
+  yoga: IconYoga,
+};
+
+export function getTreatmentIcon(key?: string): ComponentType<IconProps> {
+  return (key && TREATMENT_ICON_MAP[key]) || IconStethoscope;
+}

@@ -22,4 +22,11 @@ export const structure: StructureResolver = (S) =>
       singleton(S, "approachPage", "Approach"),
       singleton(S, "informationsPage", "Information"),
       singleton(S, "contactPage", "Contact"),
+      S.divider(),
+      S.listItem()
+        .title("Service pages")
+        .id("serviceDetailPage")
+        .child(
+          S.documentTypeList("serviceDetailPage").title("Service pages"),
+        ),
     ]);
