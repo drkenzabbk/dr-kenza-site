@@ -28,3 +28,11 @@ export const CABINET_PHOTOS = [
   "https://cdn.sanity.io/images/jhkz86m4/production/224462a4713f7836b4a69fd64d87ab239e30cc74-1086x1448.png",
   "https://cdn.sanity.io/images/jhkz86m4/production/c71bab2beeec4f11ebde56355bf230daec048fc9-1086x1448.png",
 ];
+
+/** Descriptive alt text for each CABINET_PHOTOS entry, in the same order. */
+export const CABINET_PHOTOS_ALT = [
+  "Dr Kenza Benboubker, médecin généraliste et esthétique à Bouskoura, dans son cabinet",
+  "Façade et entrée du cabinet médical du Dr Kenza Benboubker à Bouskoura",
+  "Salle d'attente confortable du cabinet du Dr Kenza Benboubker",
+  "Salle de consultation équipée du cabinet médical à Bouskoura",
+];

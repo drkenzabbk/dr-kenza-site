@@ -75,7 +75,7 @@ export function ServiceDetailView({ service }: { service: ServiceDetail }) {
               <LeafDecoration className="absolute -right-8 -top-4 h-48 w-36" />
               <RoundedImage
                 src={service.heroImage}
-                alt={service.heroTitle}
+                alt={service.heroImageAlt || service.heroTitle}
                 priority
                 className="aspect-[4/5] w-full rounded-[2rem] shadow-sm md:rounded-[2.5rem]"
               />
@@ -181,12 +181,12 @@ export function ServiceDetailView({ service }: { service: ServiceDetail }) {
             <div className="grid gap-5 sm:grid-cols-2">
               {service.galleryImage1 ? (
                 <div className="relative aspect-[5/3.6] overflow-hidden rounded-[1.5rem]">
-                  <CmsImage src={service.galleryImage1} alt={service.heroTitle} sizes="(max-width:768px) 100vw, 50vw" />
+                  <CmsImage src={service.galleryImage1} alt={service.galleryImage1Alt || service.heroTitle} sizes="(max-width:768px) 100vw, 50vw" />
                 </div>
               ) : null}
               {service.galleryImage2 ? (
                 <div className="relative aspect-[5/3.6] overflow-hidden rounded-[1.5rem]">
-                  <CmsImage src={service.galleryImage2} alt={service.heroTitle} sizes="(max-width:768px) 100vw, 50vw" />
+                  <CmsImage src={service.galleryImage2} alt={service.galleryImage2Alt || service.heroTitle} sizes="(max-width:768px) 100vw, 50vw" />
                 </div>
               ) : null}
             </div>

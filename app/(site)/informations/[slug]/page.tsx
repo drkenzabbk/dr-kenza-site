@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getBlogPost, getBlogPosts, getSiteContent } from "@/sanity/lib/content";
-import { SITE_URL, DEFAULT_SHARE_IMAGE, CABINET_PHOTOS } from "@/lib/seo";
+import { SITE_URL, DEFAULT_SHARE_IMAGE, CABINET_PHOTOS, CABINET_PHOTOS_ALT } from "@/lib/seo";
 import { BlogPostView } from "./BlogPostView";
 
 export async function generateStaticParams() {
@@ -31,7 +31,9 @@ export default async function Page({ params }: Params) {
   // Break up the article with a real photo of the practice, deterministically
   // rotated per post so consecutive articles don't all show the same one.
   const hash = [...slug].reduce((sum, char) => sum + char.charCodeAt(0), 0);
-  const galleryImage = CABINET_PHOTOS[hash % CABINET_PHOTOS.length];
+  const galleryIndex = hash % CABINET_PHOTOS.length;
+  const galleryImage = CABINET_PHOTOS[galleryIndex];
+  const galleryImageAlt = CABINET_PHOTOS_ALT[galleryIndex];
 
   const articleJsonLd = {
     "@context": "https://schema.org",
@@ -80,7 +82,7 @@ export default async function Page({ params }: Params) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       ) : null}
-      <BlogPostView post={post} galleryImage={galleryImage} />
+      <BlogPostView post={post} galleryImage={galleryImage} galleryImageAlt={galleryImageAlt} />
     </>
   );
 }

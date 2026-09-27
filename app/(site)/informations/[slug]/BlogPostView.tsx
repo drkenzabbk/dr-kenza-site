@@ -21,9 +21,11 @@ import type { BlogPostDetail } from "@/sanity/lib/content";
 export function BlogPostView({
   post,
   galleryImage,
+  galleryImageAlt,
 }: {
   post: BlogPostDetail;
   galleryImage?: string;
+  galleryImageAlt?: string;
 }) {
   const { t, links, locale } = useLanguage();
   const whatsappHref = whatsappLink(links.whatsappHref, t.contact.whatsappPrefill);
@@ -66,7 +68,7 @@ export function BlogPostView({
         <section className="pb-12 md:pb-16">
           <Container className="max-w-4xl">
             <div className="relative aspect-[16/9] overflow-hidden rounded-[1.75rem] shadow-sm">
-              <CmsImage src={post.image} alt={post.title} priority sizes="(max-width:1024px) 100vw, 900px" />
+              <CmsImage src={post.image} alt={post.imageAlt || post.title} priority sizes="(max-width:1024px) 100vw, 900px" />
             </div>
           </Container>
         </section>
@@ -86,7 +88,7 @@ export function BlogPostView({
                 </div>
                 {index === 1 && galleryImage ? (
                   <div className="relative mt-8 aspect-[16/8] overflow-hidden rounded-[1.5rem]">
-                    <CmsImage src={galleryImage} alt={post.title} sizes="(max-width:1024px) 100vw, 900px" />
+                    <CmsImage src={galleryImage} alt={galleryImageAlt || post.title} sizes="(max-width:1024px) 100vw, 900px" />
                   </div>
                 ) : null}
               </div>

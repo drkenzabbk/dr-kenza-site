@@ -32,6 +32,14 @@ export const imageField = (name: string, title: string) =>
     title,
     type: "image",
     options: { hotspot: true },
+    fields: [
+      defineField({
+        name: "alt",
+        title: "Texte alternatif (SEO)",
+        type: "string",
+        description: "Décrit précisément le contenu de l'image (utile pour le SEO et l'accessibilité).",
+      }),
+    ],
   });
 
 export const linkField = (name: string, title: string, description?: string) =>

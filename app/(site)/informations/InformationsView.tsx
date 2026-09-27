@@ -134,7 +134,7 @@ export function InformationsView({ posts }: { posts: BlogPostSummary[] }) {
               <div className="relative min-h-[240px]">
                 <CmsImage
                   src={featured.image}
-                  alt={featured.title}
+                  alt={featured.imageAlt || featured.title}
                   sizes="(max-width:768px) 100vw, 50vw"
                 />
               </div>
@@ -152,7 +152,7 @@ export function InformationsView({ posts }: { posts: BlogPostSummary[] }) {
                 <Link href={`/informations/${post.slug}`} className="relative mb-4 block aspect-[5/3.4] overflow-hidden rounded-[1.25rem]">
                   <CmsImage
                     src={post.image}
-                    alt={post.title}
+                    alt={post.imageAlt || post.title}
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     sizes="(max-width:768px) 100vw, 33vw"
                   />

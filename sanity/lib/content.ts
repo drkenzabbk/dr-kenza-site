@@ -71,6 +71,12 @@ function imageUrl(value: {_type?: string; asset?: {_ref?: string}}) {
   }
 }
 
+function imageAlt(value: unknown): string | undefined {
+  if (!isRecord(value)) return undefined;
+  const alt = value.alt;
+  return typeof alt === "string" && alt.trim() ? alt.trim() : undefined;
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
@@ -286,6 +292,7 @@ export type ServiceDetail = {
   heroTitleAccent?: string;
   heroText: string;
   heroImage?: string;
+  heroImageAlt?: string;
   stats: { title: string }[];
   introTitle?: string;
   introText?: string;
@@ -297,7 +304,9 @@ export type ServiceDetail = {
   processTitle?: string;
   processSteps: { title: string; description: string }[];
   galleryImage1?: string;
+  galleryImage1Alt?: string;
   galleryImage2?: string;
+  galleryImage2Alt?: string;
   faqLabel?: string;
   faqTitle?: string;
   faqs: { question: string; answer: string }[];
@@ -333,6 +342,7 @@ export type BlogPostSummary = {
   publishedAt?: string;
   readTime: string;
   image?: string;
+  imageAlt?: string;
   featured: boolean;
 };
 
@@ -367,6 +377,7 @@ function mapBlogSummary(
     publishedAt: typeof raw.publishedAt === "string" ? raw.publishedAt : undefined,
     readTime: typeof mapped.readTime === "string" ? mapped.readTime : "",
     image: typeof mapped.heroImage === "string" ? mapped.heroImage : undefined,
+    imageAlt: imageAlt(raw.heroImage),
     featured: Boolean(mapped.featured),
   };
 }
@@ -454,6 +465,7 @@ export const getServiceDetail = cache(
         heroTitleAccent: typeof mapped.heroTitleAccent === "string" ? mapped.heroTitleAccent : undefined,
         heroText: typeof mapped.heroText === "string" ? mapped.heroText : "",
         heroImage: typeof mapped.heroImage === "string" ? mapped.heroImage : undefined,
+        heroImageAlt: imageAlt(data.heroImage),
         stats: Array.isArray(mapped.stats) ? (mapped.stats as { title: string }[]) : [],
         introTitle: typeof mapped.introTitle === "string" ? mapped.introTitle : undefined,
         introText: typeof mapped.introText === "string" ? mapped.introText : undefined,
@@ -471,7 +483,9 @@ export const getServiceDetail = cache(
           ? (mapped.processSteps as { title: string; description: string }[])
           : [],
         galleryImage1: typeof mapped.galleryImage1 === "string" ? mapped.galleryImage1 : undefined,
+        galleryImage1Alt: imageAlt(data.galleryImage1),
         galleryImage2: typeof mapped.galleryImage2 === "string" ? mapped.galleryImage2 : undefined,
+        galleryImage2Alt: imageAlt(data.galleryImage2),
         faqLabel: typeof mapped.faqLabel === "string" ? mapped.faqLabel : undefined,
         faqTitle: typeof mapped.faqTitle === "string" ? mapped.faqTitle : undefined,
         faqs: Array.isArray(mapped.faqs) ? (mapped.faqs as { question: string; answer: string }[]) : [],
