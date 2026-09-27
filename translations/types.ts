@@ -1,0 +1,209 @@
+export type Locale = "en" | "fr";
+
+export type NavKey =
+  | "home"
+  | "about"
+  | "services"
+  | "approach"
+  | "informations"
+  | "contact";
+
+export interface Translations {
+  meta: {
+    siteName: string;
+    tagline: string;
+    description: string;
+  };
+  common: {
+    bookAppointment: string;
+    discoverServices: string;
+    discover: string;
+    readArticle: string;
+    seeAllQuestions: string;
+    seeDirections: string;
+    subscribe: string;
+    emailPlaceholder: string;
+    responseWithin: string;
+    confidentiality: string;
+    whatsappChat: string;
+    byAppointment: string;
+    language: string;
+  };
+  nav: Record<NavKey, string>;
+  footer: {
+    usefulLinks: string;
+    contact: string;
+    hours: string;
+    copyright: string;
+  };
+  contactInfo: {
+    phone: string;
+    whatsapp: string;
+    email: string;
+    address: string;
+    addressShort: string;
+    hoursWeekday: string;
+    hoursSaturday: string;
+    mapLabel: string;
+  };
+  home: {
+    heroLabel: string;
+    heroTitle: string;
+    heroTitleAccent: string;
+    heroText: string;
+    features: { title: string }[];
+    servicesLabel: string;
+    servicesTitle: string;
+    services: { title: string; description: string }[];
+    expertiseTitle: string;
+    expertiseItems: { title: string; description: string }[];
+    heroImage?: string;
+    appointmentTitle: string;
+    appointmentCta: string;
+    appointmentHref?: string;
+    faqLabel: string;
+    faqTitle: string;
+    faqs: { question: string; answer: string }[];
+  };
+  about: {
+    heroLabel: string;
+    heroTitle: string;
+    heroTitleAccent: string;
+    heroText: string;
+    features: { title: string }[];
+    timelineLabel: string;
+    timelineTitle: string;
+    timeline: { title: string; description: string }[];
+    approachLabel: string;
+    approachTitle: string;
+    approachText: string[];
+    approachCards: { title: string; description: string }[];
+    commitmentsLabel: string;
+    commitmentsTitle: string;
+    commitments: { title: string; description: string }[];
+    heroImage?: string;
+    cabinetLabel: string;
+    cabinetTitle: string;
+    cabinetText: string;
+    cabinetImage?: string;
+    cabinetHref?: string;
+  };
+  services: {
+    heroLabel: string;
+    heroTitle: string;
+    heroTitleAccent: string;
+    heroText: string;
+    domainsLabel: string;
+    domainsTitle: string;
+    heroImage?: string;
+    domains: { title: string; description: string; image?: string; href?: string }[];
+    priorityLabel: string;
+    priorityTitle: string;
+    priorityText: string;
+    priorityFeatures: { title: string }[];
+    processLabel: string;
+    processTitle: string;
+    processSteps: { title: string; description: string }[];
+    faqLabel: string;
+    faqTitle: string;
+    faqs: { question: string; answer: string }[];
+    priorityImage?: string;
+    faqImage?: string;
+    specificQuestion: string;
+    specificLink: string;
+    specificHref?: string;
+    ctaTitle: string;
+    ctaText: string;
+    ctaImage?: string;
+    ctaHref?: string;
+  };
+  approach: {
+    heroLabel: string;
+    heroTitle: string;
+    heroTitleAccent: string;
+    heroText: string;
+    philosophyLabel: string;
+    philosophyTitle: string;
+    philosophyText: string[];
+    valuesLabel: string;
+    values: { title: string; description: string }[];
+    processLabel: string;
+    processTitle: string;
+    processSteps: { title: string; description: string }[];
+    engagementLabel: string;
+    engagementTitle: string;
+    engagementText: string[];
+    heroImage?: string;
+    philosophyImage?: string;
+    engagementImage?: string;
+    engagementIcons: { title: string }[];
+    faqLabel: string;
+    faqTitle: string;
+    faqs: { question: string; answer: string }[];
+    ctaTitle: string;
+    ctaText: string;
+    ctaHref?: string;
+  };
+  informations: {
+    heroLabel: string;
+    heroTitle: string;
+    heroTitleAccent: string;
+    heroText: string;
+    categories: string[];
+    featuredLabel: string;
+    featuredCategory: string;
+    featuredTitle: string;
+    featuredExcerpt: string;
+    heroImage?: string;
+    featuredDate: string;
+    featuredReadTime: string;
+    featuredImage?: string;
+    featuredHref?: string;
+    articles: {
+      category: string;
+      categoryKey?: string;
+      title: string;
+      excerpt: string;
+      date: string;
+      readTime: string;
+      image?: string;
+      href?: string;
+    }[];
+    newsletterTitle: string;
+    newsletterText: string;
+    faqLabel: string;
+    faqTitle: string;
+    faqs: { question: string; answer: string }[];
+    ctaTitle: string;
+    ctaText: string;
+    ctaHref?: string;
+  };
+  contact: {
+    heroLabel: string;
+    heroTitle: string;
+    heroTitleAccent: string;
+    heroText: string;
+    whatsappTitle: string;
+    whatsappText: string;
+    whatsappCta: string;
+    whatsappPrefill: string;
+    whatsappSteps: { title: string; text: string }[];
+    phoneLabel: string;
+    whatsappLabel: string;
+    hoursLabel: string;
+    addressLabel: string;
+    accessTitle: string;
+    accessSimpleTitle: string;
+    accessSimpleText: string;
+    heroImage?: string;
+    accessImage?: string;
+    parkingTitle: string;
+    parkingText: string;
+    faqLabel: string;
+    faqTitle: string;
+    faqs: { question: string; answer: string }[];
+    ctaTitle: string;
+    ctaText: string;
+    ctaHref?: string;
+  };
+}
