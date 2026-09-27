@@ -99,7 +99,8 @@ export function Footer() {
         </div>
       </Container>
       <div className="border-t border-border/80 bg-beige/50 py-4 text-center text-xs text-text-soft">
-        {t.footer.copyright}
+        <p>{t.footer.copyright}</p>
+        <p className="mt-1">N° d'inscription à l'Ordre National des Médecins du Maroc : 31262</p>
       </div>
     </footer>
   );

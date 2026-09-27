@@ -58,6 +58,11 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     ],
     image: ogImageUrl || DEFAULT_SHARE_IMAGE,
     url: SITE_URL,
+    identifier: {
+      "@type": "PropertyValue",
+      name: "Ordre National des Médecins du Maroc",
+      value: "31262",
+    },
     telephone: links.phoneHref?.replace("tel:", ""),
     address: {
       "@type": "PostalAddress",
