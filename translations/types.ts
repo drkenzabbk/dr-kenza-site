@@ -62,6 +62,9 @@ export interface Translations {
     expertiseTitle: string;
     expertiseItems: { title: string; description: string }[];
     heroImage?: string;
+    testimonialsLabel: string;
+    testimonialsTitle: string;
+    testimonials: { author: string; role?: string; rating: number; text: string }[];
     appointmentTitle: string;
     appointmentCta: string;
     appointmentHref?: string;

@@ -96,6 +96,28 @@ export const en: Translations = {
         description: "Time to listen, explain and support your choices.",
       },
     ],
+    testimonialsLabel: "PATIENT REVIEWS",
+    testimonialsTitle: "What our patients say",
+    testimonials: [
+      {
+        author: "Zineb Loudghiri",
+        role: "Google review",
+        rating: 5,
+        text: "Competent doctor for both general consultations and laser treatments. She is gentle, professional and takes the time to explain. You feel at ease right away. A great experience, I recommend her without hesitation.",
+      },
+      {
+        author: "Douaa Boulkheir",
+        role: "Google review",
+        rating: 5,
+        text: "I am very satisfied with my laser hair removal experience. Dr Kenza is an exceptional professional: attentive, caring and very reassuring throughout the treatment. The results exceeded my expectations.",
+      },
+      {
+        author: "Faouzi Tpis",
+        role: "Google review",
+        rating: 5,
+        text: "I warmly recommend Dr Kenza Benboubker. She is a very competent, attentive doctor who really listens to her patients, which makes the visit much more comfortable. An excellent GP, I recommend her without hesitation.",
+      },
+    ],
     appointmentTitle: "Book an appointment",
     appointmentCta: "Book an appointment",
     faqLabel: "FREQUENTLY ASKED QUESTIONS",

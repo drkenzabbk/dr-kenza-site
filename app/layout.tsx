@@ -44,6 +44,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const content = await getSiteContent();
   const { siteName, description, ogImageUrl } = content.translations.fr.meta;
+  const { testimonials } = content.translations.fr.home;
   const links = content.links;
 
   const physicianJsonLd = {
@@ -73,6 +74,17 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     },
     areaServed: ["Bouskoura", "Casablanca"],
     sameAs: [links.instagram].filter(Boolean),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5.0",
+      reviewCount: "7",
+    },
+    review: testimonials.map((t) => ({
+      "@type": "Review",
+      author: { "@type": "Person", name: t.author },
+      reviewRating: { "@type": "Rating", ratingValue: t.rating, bestRating: 5 },
+      reviewBody: t.text,
+    })),
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",

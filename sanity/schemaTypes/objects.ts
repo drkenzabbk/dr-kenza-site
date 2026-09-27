@@ -52,6 +52,40 @@ export const titledDescription = defineType({
   preview: bilingualPreview,
 });
 
+export const testimonial = defineType({
+  name: "testimonial",
+  title: "Avis patient",
+  type: "object",
+  fields: [
+    defineField({
+      name: "author",
+      title: "Nom du patient",
+      type: "string",
+      description: "Tel qu'affiché publiquement (ex: sur l'avis Google).",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "role",
+      title: "Source",
+      type: "string",
+      description: "Ex: Avis Google",
+      initialValue: "Avis Google",
+    }),
+    defineField({
+      name: "rating",
+      title: "Note (sur 5)",
+      type: "number",
+      options: { list: [1, 2, 3, 4, 5] },
+      initialValue: 5,
+      validation: (Rule) => Rule.min(1).max(5).required(),
+    }),
+    localizedText("text", "Texte de l'avis"),
+  ],
+  preview: {
+    select: { title: "author", subtitle: "text.fr" },
+  },
+});
+
 export const faqItem = defineType({
   name: "faqItem",
   title: "Question",

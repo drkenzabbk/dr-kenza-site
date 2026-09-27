@@ -35,6 +35,7 @@ export const homePage = defineType({
     { name: "hero", title: "Hero", default: true },
     { name: "services", title: "Services" },
     { name: "expertise", title: "Expertise" },
+    { name: "testimonials", title: "Avis patients" },
     { name: "appointment", title: "Appointment" },
     { name: "faq", title: "FAQ" },
     { name: "seo", title: "SEO" },
@@ -70,6 +71,16 @@ export const homePage = defineType({
       of: [defineArrayMember({ type: "titledDescription" })],
       group: "expertise",
     }),
+    localizedString("testimonialsLabel", "Label"),
+    localizedString("testimonialsTitle", "Title"),
+    defineField({
+      name: "testimonials",
+      title: "Avis",
+      type: "array",
+      of: [defineArrayMember({ type: "testimonial" })],
+      group: "testimonials",
+      description: "Utiliser uniquement de vrais avis (ex: copiés depuis Google Avis).",
+    }),
     localizedString("appointmentTitle", "Title"),
     localizedString("appointmentCta", "Button"),
     linkField("appointmentHref", "Button link"),
@@ -81,6 +92,7 @@ export const homePage = defineType({
     if (name.startsWith("hero") || name === "features") return { ...field, group: "hero" };
     if (name.startsWith("services")) return { ...field, group: "services" };
     if (name.startsWith("expertise")) return { ...field, group: "expertise" };
+    if (name.startsWith("testimonials")) return { ...field, group: "testimonials" };
     if (name.startsWith("appointment")) return { ...field, group: "appointment" };
     if (name.startsWith("faq")) return { ...field, group: "faq" };
     if (name.startsWith("meta")) return { ...field, group: "seo" };
