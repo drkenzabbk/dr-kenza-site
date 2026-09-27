@@ -64,7 +64,7 @@ export interface Translations {
     heroImage?: string;
     testimonialsLabel: string;
     testimonialsTitle: string;
-    testimonials: { author: string; role?: string; rating: number; text: string }[];
+    testimonials: { author: string; role?: string; rating: number; quote: string }[];
     appointmentTitle: string;
     appointmentCta: string;
     appointmentHref?: string;

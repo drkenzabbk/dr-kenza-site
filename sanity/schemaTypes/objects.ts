@@ -79,10 +79,10 @@ export const testimonial = defineType({
       initialValue: 5,
       validation: (Rule) => Rule.min(1).max(5).required(),
     }),
-    localizedText("text", "Texte de l'avis"),
+    localizedText("quote", "Texte de l'avis"),
   ],
   preview: {
-    select: { title: "author", subtitle: "text.fr" },
+    select: { title: "author", subtitle: "quote.fr" },
   },
 });
 

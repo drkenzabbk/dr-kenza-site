@@ -83,7 +83,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       "@type": "Review",
       author: { "@type": "Person", name: t.author },
       reviewRating: { "@type": "Rating", ratingValue: t.rating, bestRating: 5 },
-      reviewBody: t.text,
+      reviewBody: t.quote,
     })),
     openingHoursSpecification: [
       {

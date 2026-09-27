@@ -197,7 +197,7 @@ export function HomeView() {
                     ))}
                   </span>
                   <p className="prose-body relative z-10 mt-4 flex-1 text-sm leading-relaxed">
-                    {review.text}
+                    {review.quote}
                   </p>
                   <div className="mt-6 border-t border-border/70 pt-4">
                     <p className="font-serif text-base text-green">{review.author}</p>
