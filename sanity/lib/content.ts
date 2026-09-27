@@ -166,6 +166,8 @@ function applySettings(copy: Translations, settings: Record<string, unknown>, lo
   if (typeof siteName === "string") copy.meta.siteName = siteName;
   if (typeof tagline === "string") copy.meta.tagline = tagline;
   if (typeof description === "string") copy.meta.description = description;
+  if (isImage(settings.logo)) copy.meta.logoUrl = imageUrl(settings.logo);
+  if (isImage(settings.ogImage)) copy.meta.ogImageUrl = imageUrl(settings.ogImage);
 
   for (const [sourceKey, targetKey] of Object.entries(SETTINGS_TO_COMMON)) {
     const next = fromCms(settings[sourceKey], locale);

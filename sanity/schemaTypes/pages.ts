@@ -8,6 +8,25 @@ const faqList = defineField({
   of: [defineArrayMember({ type: "faqItem" })],
 });
 
+/** SEO fields shared by every page. Kept optional — the page still renders
+ * fine without them, falling back to the site-wide title/description. */
+const seoFields = () => [
+  defineField({
+    name: "metaTitle",
+    title: "SEO title",
+    type: "localeString",
+    group: "seo",
+    description: "Shown in the browser tab and Google results. Around 50-60 characters.",
+  }),
+  defineField({
+    name: "metaDescription",
+    title: "SEO description",
+    type: "localeText",
+    group: "seo",
+    description: "Shown under the title in Google results. Around 150-160 characters.",
+  }),
+];
+
 export const homePage = defineType({
   name: "homePage",
   title: "Home",
@@ -18,8 +37,10 @@ export const homePage = defineType({
     { name: "expertise", title: "Expertise" },
     { name: "appointment", title: "Appointment" },
     { name: "faq", title: "FAQ" },
+    { name: "seo", title: "SEO" },
   ],
   fields: [
+    ...seoFields(),
     localizedString("heroLabel", "Label"),
     localizedString("heroTitle", "Title"),
     localizedString("heroTitleAccent", "Accent title"),
@@ -62,6 +83,7 @@ export const homePage = defineType({
     if (name.startsWith("expertise")) return { ...field, group: "expertise" };
     if (name.startsWith("appointment")) return { ...field, group: "appointment" };
     if (name.startsWith("faq")) return { ...field, group: "faq" };
+    if (name.startsWith("meta")) return { ...field, group: "seo" };
     return field;
   }),
   preview: { prepare: () => ({ title: "Home" }) },
@@ -77,8 +99,10 @@ export const aboutPage = defineType({
     { name: "approach", title: "Approach" },
     { name: "commitments", title: "Commitments" },
     { name: "cabinet", title: "Practice" },
+    { name: "seo", title: "SEO" },
   ],
   fields: [
+    ...seoFields(),
     localizedString("heroLabel", "Label"),
     localizedString("heroTitle", "Title"),
     localizedString("heroTitleAccent", "Accent title"),
@@ -154,8 +178,10 @@ export const servicesPage = defineType({
     { name: "process", title: "Process" },
     { name: "faq", title: "FAQ" },
     { name: "cta", title: "Call to action" },
+    { name: "seo", title: "SEO" },
   ],
   fields: [
+    ...seoFields(),
     localizedString("heroLabel", "Label"),
     localizedString("heroTitle", "Title"),
     localizedString("heroTitleAccent", "Accent title"),
@@ -212,7 +238,9 @@ export const servicesPage = defineType({
               ? "faq"
               : name.startsWith("cta")
                 ? "cta"
-                : undefined;
+                : name.startsWith("meta")
+                  ? "seo"
+                  : undefined;
     return group ? { ...field, group } : field;
   }),
   preview: { prepare: () => ({ title: "Services" }) },
@@ -229,8 +257,10 @@ export const approachPage = defineType({
     { name: "process", title: "Process" },
     { name: "engagement", title: "Engagement" },
     { name: "faq", title: "FAQ" },
+    { name: "seo", title: "SEO" },
   ],
   fields: [
+    ...seoFields(),
     localizedString("heroLabel", "Label"),
     localizedString("heroTitle", "Title"),
     localizedString("heroTitleAccent", "Accent title"),
@@ -293,7 +323,9 @@ export const approachPage = defineType({
             ? "process"
             : name.startsWith("engagement")
               ? "engagement"
-              : "faq";
+              : name.startsWith("meta")
+                ? "seo"
+                : "faq";
     return { ...field, group };
   }),
   preview: { prepare: () => ({ title: "Approach" }) },
@@ -308,8 +340,10 @@ export const informationsPage = defineType({
     { name: "articles", title: "Articles" },
     { name: "newsletter", title: "Newsletter" },
     { name: "faq", title: "FAQ" },
+    { name: "seo", title: "SEO" },
   ],
   fields: [
+    ...seoFields(),
     localizedString("heroLabel", "Label"),
     localizedString("heroTitle", "Title"),
     localizedString("heroTitleAccent", "Accent title"),
@@ -353,7 +387,9 @@ export const informationsPage = defineType({
         ? "newsletter"
         : name.startsWith("faq") || name.startsWith("cta")
           ? "faq"
-          : "articles";
+          : name.startsWith("meta")
+            ? "seo"
+            : "articles";
     return { ...field, group };
   }),
   preview: { prepare: () => ({ title: "Information" }) },
@@ -369,8 +405,10 @@ export const contactPage = defineType({
     { name: "details", title: "Details" },
     { name: "access", title: "Access" },
     { name: "faq", title: "FAQ" },
+    { name: "seo", title: "SEO" },
   ],
   fields: [
+    ...seoFields(),
     localizedString("heroLabel", "Label"),
     localizedString("heroTitle", "Title"),
     localizedString("heroTitleAccent", "Accent title"),
@@ -412,7 +450,9 @@ export const contactPage = defineType({
           ? "faq"
           : name.startsWith("access") || name.startsWith("parking")
             ? "access"
-            : "details";
+            : name.startsWith("meta")
+              ? "seo"
+              : "details";
     return { ...field, group };
   }),
   preview: { prepare: () => ({ title: "Contact" }) },

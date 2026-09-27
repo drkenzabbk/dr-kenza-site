@@ -11,6 +11,6 @@ export const translations: Record<Locale, Translations> = {
   fr,
 };
 
-export const defaultLocale: Locale = "en";
+export const defaultLocale: Locale = "fr";
 
 export type { Locale, Translations, NavKey } from "./types";

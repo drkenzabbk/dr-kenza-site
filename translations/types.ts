@@ -13,6 +13,8 @@ export interface Translations {
     siteName: string;
     tagline: string;
     description: string;
+    logoUrl?: string;
+    ogImageUrl?: string;
   };
   common: {
     bookAppointment: string;
@@ -47,6 +49,8 @@ export interface Translations {
     mapLabel: string;
   };
   home: {
+    metaTitle?: string;
+    metaDescription?: string;
     heroLabel: string;
     heroTitle: string;
     heroTitleAccent: string;
@@ -66,6 +70,8 @@ export interface Translations {
     faqs: { question: string; answer: string }[];
   };
   about: {
+    metaTitle?: string;
+    metaDescription?: string;
     heroLabel: string;
     heroTitle: string;
     heroTitleAccent: string;
@@ -89,6 +95,8 @@ export interface Translations {
     cabinetHref?: string;
   };
   services: {
+    metaTitle?: string;
+    metaDescription?: string;
     heroLabel: string;
     heroTitle: string;
     heroTitleAccent: string;
@@ -118,6 +126,8 @@ export interface Translations {
     ctaHref?: string;
   };
   approach: {
+    metaTitle?: string;
+    metaDescription?: string;
     heroLabel: string;
     heroTitle: string;
     heroTitleAccent: string;
@@ -145,6 +155,8 @@ export interface Translations {
     ctaHref?: string;
   };
   informations: {
+    metaTitle?: string;
+    metaDescription?: string;
     heroLabel: string;
     heroTitle: string;
     heroTitleAccent: string;
@@ -179,6 +191,8 @@ export interface Translations {
     ctaHref?: string;
   };
   contact: {
+    metaTitle?: string;
+    metaDescription?: string;
     heroLabel: string;
     heroTitle: string;
     heroTitleAccent: string;

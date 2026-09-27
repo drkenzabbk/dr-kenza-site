@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { linkField, localizedString, localizedText } from "./locale";
+import { imageField, linkField, localizedString, localizedText } from "./locale";
 
 export const siteSettings = defineType({
   name: "siteSettings",
@@ -17,6 +17,8 @@ export const siteSettings = defineType({
     localizedString("siteName", "Site name"),
     localizedString("tagline", "Tagline"),
     localizedText("description", "SEO description"),
+    imageField("logo", "Logo"),
+    imageField("ogImage", "Default social share image"),
     localizedString("bookAppointment", "Book appointment"),
     localizedString("discoverServices", "Discover services"),
     localizedString("discover", "Discover"),
@@ -61,7 +63,7 @@ export const siteSettings = defineType({
     linkField("seeAllQuestionsHref", "See all questions link", "Example: /contact"),
   ].map((field) => {
     const name = field.name;
-    if (["siteName", "tagline", "description"].includes(name ?? "")) {
+    if (["siteName", "tagline", "description", "logo", "ogImage"].includes(name ?? "")) {
       return { ...field, group: "identity" };
     }
     if (
