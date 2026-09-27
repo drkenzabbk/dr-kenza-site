@@ -20,6 +20,7 @@ import {
   whatsappStep,
 } from "./objects";
 import { serviceDetailPage } from "./serviceDetail";
+import { articleSection, blogPost } from "./blogPost";
 import { siteSettings } from "./siteSettings";
 
 export const schemaTypes = [
@@ -43,6 +44,8 @@ export const schemaTypes = [
   informationsPage,
   contactPage,
   serviceDetailPage,
+  articleSection,
+  blogPost,
 ];
 
 export const singletonTypes = new Set([

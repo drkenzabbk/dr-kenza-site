@@ -19,3 +19,12 @@ export const SITE_URL =
 /** Real photo of Dr Kenza Benboubker, used as the default social share / JSON-LD image. */
 export const DEFAULT_SHARE_IMAGE =
   "https://cdn.sanity.io/images/jhkz86m4/production/ab6639c2b3301722e07dfe67481d0d61266ff3f3-1122x1402.png";
+
+/** Real photos of the practice (portrait, facade, waiting room, consultation room),
+ * used to break up long-form content (blog articles) with authentic imagery. */
+export const CABINET_PHOTOS = [
+  "https://cdn.sanity.io/images/jhkz86m4/production/d323913855b4f97d1744f7f4e2e0dc599c01c61c-1122x1402.png",
+  "https://cdn.sanity.io/images/jhkz86m4/production/6e7a8faaeb5c6539e9ae9ce295a2f890136d4845-1086x1448.png",
+  "https://cdn.sanity.io/images/jhkz86m4/production/224462a4713f7836b4a69fd64d87ab239e30cc74-1086x1448.png",
+  "https://cdn.sanity.io/images/jhkz86m4/production/c71bab2beeec4f11ebde56355bf230daec048fc9-1086x1448.png",
+];

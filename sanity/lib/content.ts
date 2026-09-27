@@ -319,6 +319,120 @@ export const getServiceSlugs = cache(async (): Promise<string[]> => {
   }
 });
 
+// ============================================================
+// Blog posts (/informations/[slug])
+// ============================================================
+
+export type BlogPostSummary = {
+  slug: string;
+  categoryKey: string;
+  category: string;
+  title: string;
+  excerpt: string;
+  date: string;
+  publishedAt?: string;
+  readTime: string;
+  image?: string;
+  featured: boolean;
+};
+
+export type BlogPostDetail = BlogPostSummary & {
+  metaTitle?: string;
+  metaDescription?: string;
+  sections: { heading: string; paragraphs: string[] }[];
+  relatedServiceSlug?: string;
+  faqLabel?: string;
+  faqTitle?: string;
+  faqs: { question: string; answer: string }[];
+  ctaTitle?: string;
+  ctaText?: string;
+  ctaHref?: string;
+};
+
+const BLOG_LIST_QUERY = `*[_type == "blogPost"] | order(publishedAt desc)`;
+const BLOG_DETAIL_QUERY = `*[_type == "blogPost" && slug.current == $slug][0]`;
+
+function mapBlogSummary(
+  mapped: Record<string, unknown>,
+  raw: Record<string, unknown>,
+  slug: string,
+): BlogPostSummary {
+  return {
+    slug,
+    categoryKey: typeof mapped.categoryKey === "string" ? mapped.categoryKey : "general",
+    category: typeof mapped.category === "string" ? mapped.category : "",
+    title: typeof mapped.title === "string" ? mapped.title : "",
+    excerpt: typeof mapped.excerpt === "string" ? mapped.excerpt : "",
+    date: typeof mapped.date === "string" ? mapped.date : "",
+    publishedAt: typeof raw.publishedAt === "string" ? raw.publishedAt : undefined,
+    readTime: typeof mapped.readTime === "string" ? mapped.readTime : "",
+    image: typeof mapped.heroImage === "string" ? mapped.heroImage : undefined,
+    featured: Boolean(mapped.featured),
+  };
+}
+
+export const getBlogPosts = cache(async (locale: Locale): Promise<BlogPostSummary[]> => {
+  if (!isSanityConfigured) return [];
+  try {
+    const data = await client.fetch<Record<string, unknown>[]>(
+      BLOG_LIST_QUERY,
+      {},
+      { next: { revalidate: 30 } },
+    );
+    return data
+      .map((raw) => {
+        const mapped = fromCms(raw, locale);
+        if (!isRecord(mapped) || typeof raw.slug !== "object" || raw.slug === null) return null;
+        const slugValue = (raw.slug as { current?: string }).current;
+        if (!slugValue) return null;
+        return mapBlogSummary(mapped, raw, slugValue);
+      })
+      .filter((v): v is BlogPostSummary => v !== null);
+  } catch {
+    return [];
+  }
+});
+
+export const getBlogPost = cache(
+  async (slug: string, locale: Locale): Promise<BlogPostDetail | null> => {
+    if (!isSanityConfigured) return null;
+    try {
+      const data = await client.fetch<Record<string, unknown> | null>(
+        BLOG_DETAIL_QUERY,
+        { slug },
+        { next: { revalidate: 30 } },
+      );
+      if (!data) return null;
+      const mapped = fromCms(data, locale);
+      if (!isRecord(mapped)) return null;
+      const summary = mapBlogSummary(mapped, data, slug);
+      const sections = Array.isArray(mapped.sections)
+        ? (mapped.sections as Record<string, unknown>[]).map((s) => ({
+            heading: typeof s.heading === "string" ? s.heading : "",
+            paragraphs: Array.isArray(s.paragraphs)
+              ? (s.paragraphs as unknown[]).filter((p): p is string => typeof p === "string")
+              : [],
+          }))
+        : [];
+      return {
+        ...summary,
+        metaTitle: typeof mapped.metaTitle === "string" ? mapped.metaTitle : undefined,
+        metaDescription: typeof mapped.metaDescription === "string" ? mapped.metaDescription : undefined,
+        sections,
+        relatedServiceSlug: typeof data.relatedServiceSlug === "string" ? data.relatedServiceSlug : undefined,
+        faqLabel: typeof mapped.faqLabel === "string" ? mapped.faqLabel : undefined,
+        faqTitle: typeof mapped.faqTitle === "string" ? mapped.faqTitle : undefined,
+        faqs: Array.isArray(mapped.faqs) ? (mapped.faqs as { question: string; answer: string }[]) : [],
+        ctaTitle: typeof mapped.ctaTitle === "string" ? mapped.ctaTitle : undefined,
+        ctaText: typeof mapped.ctaText === "string" ? mapped.ctaText : undefined,
+        ctaHref: typeof mapped.ctaHref === "string" ? mapped.ctaHref : undefined,
+      };
+    } catch {
+      return null;
+    }
+  },
+);
+
 export const getServiceDetail = cache(
   async (slug: string, locale: Locale): Promise<ServiceDetail | null> => {
     if (!isSanityConfigured) return null;

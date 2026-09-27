@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getSiteContent } from "@/sanity/lib/content";
+import { getBlogPosts, getSiteContent } from "@/sanity/lib/content";
 import { InformationsView } from "./InformationsView";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-  const content = await getSiteContent();
+  const [content, posts] = await Promise.all([getSiteContent(), getBlogPosts("fr")]);
   const { faqs } = content.translations.fr.informations;
 
   const faqJsonLd = {
@@ -35,7 +35,7 @@ export default async function Page() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       ) : null}
-      <InformationsView />
+      <InformationsView posts={posts} />
     </>
   );
 }

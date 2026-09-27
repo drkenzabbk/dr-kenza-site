@@ -22,30 +22,27 @@ import { CTA } from "@/components/ui/CTA";
 import { LeafDecoration, LeafMark } from "@/components/ui/LeafDecoration";
 import { RoundedImage } from "@/components/ui/RoundedImage";
 import { CmsImage } from "@/components/ui/CmsImage";
+import type { BlogPostSummary } from "@/sanity/lib/content";
 
 const categoryIcons = [IconLeaf, IconStethoscope, IconDroplet, IconSparkles, IconHeart];
+const CATEGORY_KEYS = ["all", "general", "diabetes", "aesthetic", "wellness"];
 
-function articleCategoryKey(category: string, categoryKey?: string) {
-  if (categoryKey) return categoryKey;
-  const value = category.toLowerCase();
-  if (value.includes("diab")) return "diabetes";
-  if (value.includes("esth") || value.includes("aesthet")) return "aesthetic";
-  if (value.includes("bien") || value.includes("well")) return "wellness";
-  return "general";
-}
-
-export function InformationsView() {
+export function InformationsView({ posts }: { posts: BlogPostSummary[] }) {
   const { t, links } = useLanguage();
   const [active, setActive] = useState(0);
 
+  const featured = useMemo(() => posts.find((p) => p.featured) ?? posts[0], [posts]);
+
+  const rest = useMemo(
+    () => posts.filter((p) => p.slug !== featured?.slug),
+    [posts, featured],
+  );
+
   const filtered = useMemo(() => {
-    if (active === 0) return t.informations.articles;
-    const keys = ["all", "general", "diabetes", "aesthetic", "wellness"];
-    const selected = keys[active] ?? "all";
-    return t.informations.articles.filter(
-      (article) => articleCategoryKey(article.category, article.categoryKey) === selected,
-    );
-  }, [active, t.informations.articles]);
+    if (active === 0) return rest;
+    const selected = CATEGORY_KEYS[active] ?? "all";
+    return rest.filter((post) => post.categoryKey === selected);
+  }, [active, rest]);
 
   return (
     <>
@@ -105,81 +102,76 @@ export function InformationsView() {
       </section>
 
       {/* Featured */}
-      <section className="pb-12 md:pb-16">
-        <Container>
-          <article className="card-soft grid overflow-hidden md:grid-cols-2">
-            <div className="flex flex-col justify-center p-7 md:p-10">
-              <p className="text-xs font-medium tracking-[0.14em] text-gold">
-                {t.informations.featuredLabel} • {t.informations.featuredCategory}
-              </p>
-              <h2 className="mt-3 font-serif text-2xl text-green md:text-3xl">
-                {t.informations.featuredTitle}
-              </h2>
-              <p className="prose-body mt-3 text-sm">{t.informations.featuredExcerpt}</p>
-              <div className="mt-4 flex flex-wrap gap-4 text-xs text-text-soft">
-                <span className="inline-flex items-center gap-1.5">
-                  <IconCalendar className="h-3.5 w-3.5" stroke={1.5} />
-                  {t.informations.featuredDate}
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <IconClock className="h-3.5 w-3.5" stroke={1.5} />
-                  {t.informations.featuredReadTime}
-                </span>
+      {featured ? (
+        <section className="pb-12 md:pb-16">
+          <Container>
+            <article className="card-soft grid overflow-hidden md:grid-cols-2">
+              <div className="flex flex-col justify-center p-7 md:p-10">
+                <p className="text-xs font-medium tracking-[0.14em] text-gold">
+                  {t.informations.featuredLabel} • {featured.category}
+                </p>
+                <Link
+                  href={`/informations/${featured.slug}`}
+                  className="mt-3 block font-serif text-2xl text-green hover:opacity-90 md:text-3xl"
+                >
+                  {featured.title}
+                </Link>
+                <p className="prose-body mt-3 text-sm">{featured.excerpt}</p>
+                <div className="mt-4 flex flex-wrap gap-4 text-xs text-text-soft">
+                  <span className="inline-flex items-center gap-1.5">
+                    <IconCalendar className="h-3.5 w-3.5" stroke={1.5} />
+                    {featured.date}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <IconClock className="h-3.5 w-3.5" stroke={1.5} />
+                    {featured.readTime}
+                  </span>
+                </div>
+                <Button href={`/informations/${featured.slug}`} variant="outline" className="mt-6 w-fit">
+                  {t.common.readArticle}
+                </Button>
               </div>
-              {t.informations.featuredHref ? (
-                <Button href={t.informations.featuredHref} variant="outline" className="mt-6 w-fit">
-                  {t.common.readArticle}
-                </Button>
-              ) : (
-                <Button variant="outline" className="mt-6 w-fit">
-                  {t.common.readArticle}
-                </Button>
-              )}
-            </div>
-            <div className="relative min-h-[240px]">
-              <CmsImage
-                src={t.informations.featuredImage}
-                alt={t.informations.featuredTitle}
-                sizes="(max-width:768px) 100vw, 50vw"
-              />
-            </div>
-          </article>
-        </Container>
-      </section>
+              <div className="relative min-h-[240px]">
+                <CmsImage
+                  src={featured.image}
+                  alt={featured.title}
+                  sizes="(max-width:768px) 100vw, 50vw"
+                />
+              </div>
+            </article>
+          </Container>
+        </section>
+      ) : null}
 
       {/* Articles grid */}
       <section className="pb-16 md:pb-20">
         <Container>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((article) => (
-              <article key={article.title} className="group">
-                <div className="relative mb-4 aspect-[5/3.4] overflow-hidden rounded-[1.25rem]">
+            {filtered.map((post) => (
+              <article key={post.slug} className="group">
+                <Link href={`/informations/${post.slug}`} className="relative mb-4 block aspect-[5/3.4] overflow-hidden rounded-[1.25rem]">
                   <CmsImage
-                    src={article.image}
-                    alt={article.title}
+                    src={post.image}
+                    alt={post.title}
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     sizes="(max-width:768px) 100vw, 33vw"
                   />
-                </div>
+                </Link>
                 <p className="text-[0.7rem] font-medium tracking-[0.14em] text-gold">
-                  {article.category}
+                  {post.category}
                 </p>
-                {article.href ? (
-                  <Link href={article.href} className="mt-2 block font-serif text-xl text-green">
-                    {article.title}
-                  </Link>
-                ) : (
-                  <h3 className="mt-2 font-serif text-xl text-green">{article.title}</h3>
-                )}
-                <p className="prose-body mt-2 text-sm">{article.excerpt}</p>
+                <Link href={`/informations/${post.slug}`} className="mt-2 block font-serif text-xl text-green">
+                  {post.title}
+                </Link>
+                <p className="prose-body mt-2 text-sm">{post.excerpt}</p>
                 <div className="mt-3 flex flex-wrap gap-4 text-xs text-text-soft">
                   <span className="inline-flex items-center gap-1.5">
                     <IconCalendar className="h-3.5 w-3.5" stroke={1.5} />
-                    {article.date}
+                    {post.date}
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <IconClock className="h-3.5 w-3.5" stroke={1.5} />
-                    {article.readTime}
+                    {post.readTime}
                   </span>
                 </div>
               </article>

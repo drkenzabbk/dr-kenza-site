@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
-import { getServiceSlugs } from "@/sanity/lib/content";
+import { getServiceSlugs, getBlogPosts } from "@/sanity/lib/content";
 
 const routes: Array<{ path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }> = [
   { path: "/", priority: 1, changeFrequency: "weekly" },
@@ -20,13 +20,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route.priority,
   }));
 
-  const serviceSlugs = await getServiceSlugs();
+  const [serviceSlugs, blogPosts] = await Promise.all([getServiceSlugs(), getBlogPosts("fr")]);
   const serviceEntries = serviceSlugs.map((slug) => ({
     url: `${SITE_URL}/services/${slug}`,
     lastModified,
     changeFrequency: "monthly" as const,
     priority: 0.85,
   }));
+  const blogEntries = blogPosts.map((post) => ({
+    url: `${SITE_URL}/informations/${post.slug}`,
+    lastModified: post.publishedAt ? new Date(post.publishedAt) : lastModified,
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
 
-  return [...staticEntries, ...serviceEntries];
+  return [...staticEntries, ...serviceEntries, ...blogEntries];
 }

@@ -29,4 +29,12 @@ export const structure: StructureResolver = (S) =>
         .child(
           S.documentTypeList("serviceDetailPage").title("Service pages"),
         ),
+      S.listItem()
+        .title("Blog posts")
+        .id("blogPost")
+        .child(
+          S.documentTypeList("blogPost").title("Blog posts").defaultOrdering([
+            { field: "publishedAt", direction: "desc" },
+          ]),
+        ),
     ]);
