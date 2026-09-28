@@ -26,6 +26,7 @@ import { RoundedImage } from "@/components/ui/RoundedImage";
 import { MapBlock } from "@/components/ui/MapBlock";
 import { DoctorBadge } from "@/components/ui/DoctorBadge";
 import { InstagramFeed } from "@/components/ui/InstagramFeed";
+import { ResultsGallery } from "@/components/ui/ResultsGallery";
 
 const serviceIcons = [
   IconStethoscope,
@@ -212,6 +213,9 @@ export function HomeView() {
           </Container>
         </section>
       ) : null}
+
+      {/* Results (before / after) */}
+      <ResultsGallery items={t.home.results} />
 
       {/* Instagram */}
       <InstagramFeed posts={t.home.instagramPosts} />

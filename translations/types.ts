@@ -65,6 +65,10 @@ export interface Translations {
     testimonialsLabel: string;
     testimonialsTitle: string;
     testimonials: { author: string; role?: string; rating: number; quote: string }[];
+    resultsLabel: string;
+    resultsTitle: string;
+    resultsTitleAccent: string;
+    results: { image: string; caption?: string }[];
     instagramLabel: string;
     instagramTitle: string;
     instagramTitleAccent: string;

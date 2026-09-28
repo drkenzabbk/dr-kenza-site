@@ -1,5 +1,5 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { localizedString, localizedText } from "./locale";
+import { imageField, localizedString, localizedText } from "./locale";
 
 const bilingualPreview = {
   select: { en: "title.en", fr: "title.fr" },
@@ -276,6 +276,23 @@ export const instagramPost = defineType({
     select: { subtitle: "url" },
     prepare({ subtitle }: { subtitle?: string }) {
       return { title: "Publication Instagram", subtitle };
+    },
+  },
+});
+
+export const resultImage = defineType({
+  name: "resultImage",
+  title: "Photo avant / après",
+  type: "object",
+  fields: [
+    imageField("image", "Photo (avant/après déjà montés dans une seule image)"),
+    localizedString("caption", "Légende (ex: Botox - Front)"),
+  ],
+  preview: {
+    select: { media: "image", en: "caption.en", fr: "caption.fr" },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    prepare({ media, en, fr }: { media?: any; en?: string; fr?: string }) {
+      return { title: en || fr || "Photo avant / après", media };
     },
   },
 });

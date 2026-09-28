@@ -36,6 +36,7 @@ export const homePage = defineType({
     { name: "services", title: "Services" },
     { name: "expertise", title: "Expertise" },
     { name: "testimonials", title: "Avis patients" },
+    { name: "results", title: "Avant / Après" },
     { name: "instagram", title: "Instagram" },
     { name: "appointment", title: "Appointment" },
     { name: "faq", title: "FAQ" },
@@ -82,6 +83,19 @@ export const homePage = defineType({
       group: "testimonials",
       description: "Utiliser uniquement de vrais avis (ex: copiés depuis Google Avis).",
     }),
+    localizedString("resultsLabel", "Label"),
+    localizedString("resultsTitle", "Title"),
+    localizedString("resultsTitleAccent", "Title (italic part)"),
+    defineField({
+      name: "results",
+      title: "Photos avant / après",
+      type: "array",
+      of: [defineArrayMember({ type: "resultImage" })],
+      group: "results",
+      validation: (Rule) => Rule.max(12),
+      description:
+        "Utiliser uniquement de vraies photos de patientes avec leur consentement. La section reste masquée tant qu'aucune photo n'est ajoutée.",
+    }),
     localizedString("instagramLabel", "Label"),
     localizedString("instagramTitle", "Title"),
     localizedString("instagramTitleAccent", "Title (italic part)"),
@@ -107,6 +121,7 @@ export const homePage = defineType({
     if (name.startsWith("services")) return { ...field, group: "services" };
     if (name.startsWith("expertise")) return { ...field, group: "expertise" };
     if (name.startsWith("testimonials")) return { ...field, group: "testimonials" };
+    if (name.startsWith("results")) return { ...field, group: "results" };
     if (name.startsWith("instagram")) return { ...field, group: "instagram" };
     if (name.startsWith("appointment")) return { ...field, group: "appointment" };
     if (name.startsWith("faq")) return { ...field, group: "faq" };
