@@ -22,6 +22,7 @@ export const structure: StructureResolver = (S) =>
       singleton(S, "approachPage", "Approach"),
       singleton(S, "informationsPage", "Information"),
       singleton(S, "contactPage", "Contact"),
+      singleton(S, "internationalPage", "Patientes de l'étranger"),
       S.divider(),
       S.listItem()
         .title("Service pages")

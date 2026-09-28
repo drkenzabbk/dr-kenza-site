@@ -539,4 +539,81 @@ export const en: Translations = {
     ctaTitle: "Book an appointment easily",
     ctaText: "Message us on WhatsApp or call the practice directly.",
   },
+  international: {
+    metaTitle: "Care for Patients Visiting from Abroad",
+    metaDescription:
+      "Living abroad and planning a trip to Casablanca? Plan your medical and aesthetic care (general check-ups, aesthetic medicine, diabetes, hijama) with Dr Kenza Benboubker in Bouskoura — consultations in French, Arabic or English.",
+    heroLabel: "PATIENTS FROM ABROAD",
+    heroTitle: "Make the most of your trip to Morocco to take care of",
+    heroTitleAccent: "yourself.",
+    heroText:
+      "Living abroad and planning a trip to Casablanca? Let's plan your care before you arrive, for a smooth, efficient stay.",
+    highlights: [
+      { title: "Care in French, Arabic or English" },
+      { title: "Coordination by WhatsApp before you arrive" },
+      { title: "Modern practice in Bouskoura, near the airport" },
+    ],
+    whyLabel: "WHY CHOOSE US",
+    whyTitle: "Care designed around your stay",
+    why: [
+      {
+        title: "One trip, several treatments",
+        description:
+          "Combine a general check-up, follow-up care, or aesthetic medicine in a single stay, with a schedule that fits your availability.",
+      },
+      {
+        title: "Care in your language",
+        description: "Consultations are held in French, Arabic or English, whichever you prefer.",
+      },
+      {
+        title: "Discretion and confidentiality",
+        description: "Your information and treatments remain strictly confidential, in a calm, private practice.",
+      },
+      {
+        title: "Follow-up that continues after you leave",
+        description: "Remote follow-up may be available in some cases once you're back home.",
+      },
+    ],
+    stepsLabel: "HOW IT WORKS",
+    stepsTitle: "Plan your visit in 3 steps",
+    steps: [
+      {
+        title: "Reach out before your trip",
+        text: "Message us on WhatsApp with your needs and travel dates.",
+      },
+      {
+        title: "We prepare your visit",
+        text: "We propose an appointment schedule that fits the length of your stay.",
+      },
+      {
+        title: "Your appointment at the practice",
+        text: "You're welcomed in Bouskoura, Casablanca, for your consultations and treatments.",
+      },
+    ],
+    faqLabel: "FREQUENTLY ASKED QUESTIONS",
+    faqTitle: "Your questions, our answers",
+    faqs: [
+      {
+        question: "Can I book an appointment before arriving in Morocco?",
+        answer:
+          "Yes. Contact the practice on WhatsApp with your travel dates and we'll schedule your appointments ahead of time.",
+      },
+      {
+        question: "What languages does Dr Kenza Benboubker speak?",
+        answer: "Consultations are held in French, Arabic or English, whichever you prefer.",
+      },
+      {
+        question: "Can I combine several treatments during my stay?",
+        answer:
+          "Yes, a schedule can be arranged to combine a general check-up, diabetes follow-up, or aesthetic medicine based on your needs.",
+      },
+      {
+        question: "Is follow-up possible after I return abroad?",
+        answer:
+          "Online consultations may be available in some cases to support your follow-up. Check with the practice.",
+      },
+    ],
+    ctaTitle: "Let's plan your visit",
+    ctaText: "Message us on WhatsApp with your travel dates to arrange your appointments.",
+  },
 };

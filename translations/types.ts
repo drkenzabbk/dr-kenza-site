@@ -231,4 +231,26 @@ export interface Translations {
     ctaText: string;
     ctaHref?: string;
   };
+  international: {
+    metaTitle?: string;
+    metaDescription?: string;
+    heroLabel: string;
+    heroTitle: string;
+    heroTitleAccent: string;
+    heroText: string;
+    heroImage?: string;
+    highlights: { title: string }[];
+    whyLabel: string;
+    whyTitle: string;
+    why: { title: string; description: string }[];
+    stepsLabel: string;
+    stepsTitle: string;
+    steps: { title: string; text: string }[];
+    faqLabel: string;
+    faqTitle: string;
+    faqs: { question: string; answer: string }[];
+    ctaTitle: string;
+    ctaText: string;
+    ctaHref?: string;
+  };
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   IconClock,
   IconMapPin,
@@ -15,6 +16,8 @@ import {
   IconStarFilled,
   IconBrandGoogle,
   IconQuote,
+  IconPlaneTilt,
+  IconArrowRight,
 } from "@tabler/icons-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Container } from "@/components/ui/Container";
@@ -25,6 +28,7 @@ import { LeafDecoration, LeafMark } from "@/components/ui/LeafDecoration";
 import { RoundedImage } from "@/components/ui/RoundedImage";
 import { MapBlock } from "@/components/ui/MapBlock";
 import { DoctorBadge } from "@/components/ui/DoctorBadge";
+import { StatBadge } from "@/components/ui/StatBadge";
 import { InstagramFeed } from "@/components/ui/InstagramFeed";
 import { ResultsGallery } from "@/components/ui/ResultsGallery";
 
@@ -38,7 +42,7 @@ const serviceIcons = [
 const expertiseIcons = [IconSchool, IconAward, IconHeartHandshake];
 
 export function HomeView() {
-  const { t, links } = useLanguage();
+  const { t, links, locale } = useLanguage();
 
   return (
     <>
@@ -88,7 +92,12 @@ export function HomeView() {
                 alt={t.meta.siteName}
                 priority
                 className="aspect-[4/5] w-full rounded-[2rem] shadow-sm md:rounded-[2.5rem]"
-                badge={<DoctorBadge />}
+                badge={
+                  <>
+                    <DoctorBadge />
+                    <StatBadge />
+                  </>
+                }
               />
             </div>
           </div>
@@ -121,6 +130,31 @@ export function HomeView() {
               );
             })}
           </div>
+        </Container>
+      </section>
+
+      {/* International patients banner */}
+      <section className="pb-8 md:pb-10">
+        <Container>
+          <Link
+            href="/patientes-etranger"
+            className="group flex flex-col items-start justify-between gap-4 rounded-2xl border border-gold/30 bg-beige-soft px-6 py-5 transition-colors hover:border-gold/60 sm:flex-row sm:items-center"
+          >
+            <span className="flex items-center gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-gold">
+                <IconPlaneTilt className="h-5 w-5" stroke={1.5} />
+              </span>
+              <span className="text-sm font-medium text-green sm:text-base">
+                {locale === "fr"
+                  ? "Vous vivez à l'étranger et prévoyez un séjour au Maroc ?"
+                  : "Living abroad and planning a trip to Morocco?"}
+              </span>
+            </span>
+            <span className="inline-flex items-center gap-1.5 whitespace-nowrap text-sm font-semibold text-green">
+              {locale === "fr" ? "Organisez votre venue" : "Plan your visit"}
+              <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </span>
+          </Link>
         </Container>
       </section>
 

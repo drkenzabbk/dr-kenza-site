@@ -499,3 +499,65 @@ export const contactPage = defineType({
   }),
   preview: { prepare: () => ({ title: "Contact" }) },
 });
+
+export const internationalPage = defineType({
+  name: "internationalPage",
+  title: "Patientes de l'étranger",
+  type: "document",
+  groups: [
+    { name: "hero", title: "Hero", default: true },
+    { name: "why", title: "Pourquoi nous choisir" },
+    { name: "steps", title: "Étapes" },
+    { name: "faq", title: "FAQ" },
+    { name: "seo", title: "SEO" },
+  ],
+  fields: [
+    ...seoFields(),
+    localizedString("heroLabel", "Label"),
+    localizedString("heroTitle", "Title"),
+    localizedString("heroTitleAccent", "Accent title"),
+    localizedText("heroText", "Text"),
+    imageField("heroImage", "Portrait"),
+    defineField({
+      name: "highlights",
+      title: "Points clés (sous le titre)",
+      type: "array",
+      of: [defineArrayMember({ type: "titledItem" })],
+    }),
+    localizedString("whyLabel", "Label"),
+    localizedString("whyTitle", "Title"),
+    defineField({
+      name: "why",
+      title: "Raisons",
+      type: "array",
+      of: [defineArrayMember({ type: "titledDescription" })],
+    }),
+    localizedString("stepsLabel", "Label"),
+    localizedString("stepsTitle", "Title"),
+    defineField({
+      name: "steps",
+      title: "Étapes",
+      type: "array",
+      of: [defineArrayMember({ type: "whatsappStep" })],
+    }),
+    localizedString("faqLabel", "Label"),
+    localizedString("faqTitle", "Title"),
+    faqList,
+    localizedString("ctaTitle", "Call to action title"),
+    localizedText("ctaText", "Call to action text"),
+    linkField("ctaHref", "Call to action link"),
+  ].map((field) => {
+    const name = "name" in field ? field.name : "";
+    const group = name.startsWith("hero") || name === "highlights"
+      ? "hero"
+      : name.startsWith("why")
+        ? "why"
+        : name.startsWith("steps")
+          ? "steps"
+          : name.startsWith("meta")
+            ? "seo"
+            : "faq";
+    return { ...field, group };
+  }),
+  preview: { prepare: () => ({ title: "Patientes de l'étranger" }) },
+});

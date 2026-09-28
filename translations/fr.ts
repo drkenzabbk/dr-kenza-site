@@ -540,4 +540,85 @@ export const fr: Translations = {
     ctaTitle: "Prendre rendez-vous facilement",
     ctaText: "Écrivez-nous sur WhatsApp ou contactez directement le cabinet.",
   },
+  international: {
+    metaTitle: "Patientes de l'étranger à Casablanca",
+    metaDescription:
+      "Vous vivez à l'étranger et prévoyez un séjour au Maroc ? Planifiez vos soins (consultation générale, médecine esthétique, diabétologie, hijama) avec le Dr Kenza Benboubker à Bouskoura, Casablanca — suivi en français, arabe ou anglais.",
+    heroLabel: "PATIENTES DE L'ÉTRANGER",
+    heroTitle: "Votre séjour au Maroc, l'occasion de prendre soin de",
+    heroTitleAccent: "vous.",
+    heroText:
+      "Vous vivez à l'étranger et prévoyez un passage à Casablanca ? Organisons vos soins avant votre arrivée, pour un séjour serein et efficace.",
+    highlights: [
+      { title: "Suivi en français, arabe ou anglais" },
+      { title: "Coordination par WhatsApp avant votre arrivée" },
+      { title: "Cabinet moderne à Bouskoura, près de l'aéroport" },
+    ],
+    whyLabel: "POURQUOI NOUS CHOISIR",
+    whyTitle: "Un accompagnement pensé pour votre séjour",
+    why: [
+      {
+        title: "Un seul déplacement, plusieurs soins",
+        description:
+          "Regroupez consultation générale, suivi ou médecine esthétique en un seul séjour, avec un planning adapté à vos disponibilités.",
+      },
+      {
+        title: "Une écoute dans votre langue",
+        description:
+          "Les consultations se déroulent en français, arabe ou anglais, selon votre préférence.",
+      },
+      {
+        title: "Discrétion et confidentialité",
+        description:
+          "Vos informations et vos soins restent strictement confidentiels, dans un cabinet calme et privé.",
+      },
+      {
+        title: "Un suivi qui continue après votre retour",
+        description:
+          "Un suivi à distance peut être proposé dans certains cas après votre retour à l'étranger.",
+      },
+    ],
+    stepsLabel: "COMMENT ÇA SE PASSE",
+    stepsTitle: "Organisez votre venue en 3 étapes",
+    steps: [
+      {
+        title: "Contactez-nous avant votre voyage",
+        text: "Écrivez-nous sur WhatsApp pour décrire vos besoins et vos dates de séjour.",
+      },
+      {
+        title: "Nous préparons votre venue",
+        text: "Nous vous proposons un planning de rendez-vous adapté à la durée de votre séjour.",
+      },
+      {
+        title: "Votre rendez-vous au cabinet",
+        text: "Vous êtes accueillie à Bouskoura, à Casablanca, pour vos consultations et soins.",
+      },
+    ],
+    faqLabel: "QUESTIONS FRÉQUENTES",
+    faqTitle: "Vos questions, nos réponses",
+    faqs: [
+      {
+        question: "Puis-je prendre rendez-vous avant mon arrivée au Maroc ?",
+        answer:
+          "Oui. Contactez le cabinet sur WhatsApp avec vos dates de séjour : nous organisons vos rendez-vous à l'avance.",
+      },
+      {
+        question: "Quelles langues parle la Dr Kenza Benboubker ?",
+        answer:
+          "Les consultations se déroulent en français, arabe ou anglais, selon votre préférence.",
+      },
+      {
+        question: "Puis-je combiner plusieurs soins pendant mon séjour ?",
+        answer:
+          "Oui, un planning peut être organisé pour regrouper consultation générale, suivi du diabète ou médecine esthétique selon vos besoins.",
+      },
+      {
+        question: "Un suivi est-il possible après mon retour à l'étranger ?",
+        answer:
+          "Des consultations en ligne peuvent être disponibles dans certains cas pour assurer votre suivi. Renseignez-vous auprès du cabinet.",
+      },
+    ],
+    ctaTitle: "Planifions votre venue",
+    ctaText: "Écrivez-nous sur WhatsApp avec vos dates de séjour pour organiser vos rendez-vous.",
+  },
 };

@@ -4,6 +4,7 @@ import {
   contactPage,
   homePage,
   informationsPage,
+  internationalPage,
   servicesPage,
 } from "./pages";
 import { localeString, localeText } from "./locale";
@@ -49,6 +50,7 @@ export const schemaTypes = [
   approachPage,
   informationsPage,
   contactPage,
+  internationalPage,
   serviceDetailPage,
   articleSection,
   blogPost,
@@ -62,4 +64,5 @@ export const singletonTypes = new Set([
   "approachPage",
   "informationsPage",
   "contactPage",
+  "internationalPage",
 ]);

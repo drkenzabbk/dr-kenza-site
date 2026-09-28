@@ -14,7 +14,7 @@ import { Container } from "@/components/ui/Container";
 import { Logo } from "./Logo";
 
 export function Footer() {
-  const { t, links } = useLanguage();
+  const { t, links, locale } = useLanguage();
 
   return (
     <footer className="mt-auto border-t border-border bg-beige-soft/60">
@@ -39,6 +39,14 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href="/patientes-etranger"
+                  className="text-sm text-text-muted transition-colors hover:text-green"
+                >
+                  {locale === "fr" ? "Patientes de l&apos;étranger" : "Patients from abroad"}
+                </Link>
+              </li>
             </ul>
           </div>
 

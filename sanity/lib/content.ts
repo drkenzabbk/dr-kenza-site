@@ -48,7 +48,8 @@ const CONTENT_QUERY = `{
   "services": *[_id == "servicesPage"][0],
   "approach": *[_id == "approachPage"][0],
   "informations": *[_id == "informationsPage"][0],
-  "contact": *[_id == "contactPage"][0]
+  "contact": *[_id == "contactPage"][0],
+  "international": *[_id == "internationalPage"][0]
 }`;
 
 type CmsPayload = {
@@ -59,6 +60,7 @@ type CmsPayload = {
   approach?: Record<string, unknown> | null;
   informations?: Record<string, unknown> | null;
   contact?: Record<string, unknown> | null;
+  international?: Record<string, unknown> | null;
 };
 
 const builder = createImageUrlBuilder(client);
@@ -127,8 +129,15 @@ function fromCms(source: unknown, locale: Locale): unknown {
 
   if (!isRecord(source)) return source;
 
-  if (isLocale(source.label)) return pickLocale(source.label, locale);
-  if (isLocale(source.text)) return pickLocale(source.text, locale);
+  // Only single-purpose wrapper types collapse to their bare string — never
+  // types with sibling fields (e.g. whatsappStep's title + text), or the
+  // sibling would be silently dropped.
+  if (source._type === "categoryItem" && isLocale(source.label)) {
+    return pickLocale(source.label, locale);
+  }
+  if (source._type === "textBlock" && isLocale(source.text)) {
+    return pickLocale(source.text, locale);
+  }
 
   const result: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(source)) {
@@ -232,7 +241,7 @@ function linksFromSettings(settings?: Record<string, unknown> | null): SiteLinks
   };
 }
 
-function applyPage<K extends "home" | "about" | "services" | "approach" | "informations" | "contact">(
+function applyPage<K extends "home" | "about" | "services" | "approach" | "informations" | "contact" | "international">(
   copy: Translations,
   page: K,
   source: Record<string, unknown>,
@@ -248,7 +257,7 @@ function buildLocale(data: CmsPayload, locale: Locale): Translations {
   const copy = blankTranslations();
   if (data.settings) applySettings(copy, data.settings, locale);
 
-  const pages = ["home", "about", "services", "approach", "informations", "contact"] as const;
+  const pages = ["home", "about", "services", "approach", "informations", "contact", "international"] as const;
   for (const page of pages) {
     const source = data[page];
     if (!source) continue;

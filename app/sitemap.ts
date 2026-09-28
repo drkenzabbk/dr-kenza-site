@@ -9,6 +9,7 @@ const routes: Array<{ path: string; priority: number; changeFrequency: MetadataR
   { path: "/approche", priority: 0.7, changeFrequency: "monthly" },
   { path: "/informations", priority: 0.7, changeFrequency: "weekly" },
   { path: "/contact", priority: 0.8, changeFrequency: "monthly" },
+  { path: "/patientes-etranger", priority: 0.7, changeFrequency: "monthly" },
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
