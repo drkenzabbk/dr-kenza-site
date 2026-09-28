@@ -36,6 +36,7 @@ export const homePage = defineType({
     { name: "services", title: "Services" },
     { name: "expertise", title: "Expertise" },
     { name: "testimonials", title: "Avis patients" },
+    { name: "instagram", title: "Instagram" },
     { name: "appointment", title: "Appointment" },
     { name: "faq", title: "FAQ" },
     { name: "seo", title: "SEO" },
@@ -81,6 +82,19 @@ export const homePage = defineType({
       group: "testimonials",
       description: "Utiliser uniquement de vrais avis (ex: copiés depuis Google Avis).",
     }),
+    localizedString("instagramLabel", "Label"),
+    localizedString("instagramTitle", "Title"),
+    localizedString("instagramTitleAccent", "Title (italic part)"),
+    defineField({
+      name: "instagramPosts",
+      title: "Publications mises en avant",
+      type: "array",
+      of: [defineArrayMember({ type: "instagramPost" })],
+      group: "instagram",
+      validation: (Rule) => Rule.max(8),
+      description:
+        "Coller les liens de quelques publications ou reels publics à afficher. La section reste masquée tant qu'aucun lien n'est ajouté.",
+    }),
     localizedString("appointmentTitle", "Title"),
     localizedString("appointmentCta", "Button"),
     linkField("appointmentHref", "Button link"),
@@ -93,6 +107,7 @@ export const homePage = defineType({
     if (name.startsWith("services")) return { ...field, group: "services" };
     if (name.startsWith("expertise")) return { ...field, group: "expertise" };
     if (name.startsWith("testimonials")) return { ...field, group: "testimonials" };
+    if (name.startsWith("instagram")) return { ...field, group: "instagram" };
     if (name.startsWith("appointment")) return { ...field, group: "appointment" };
     if (name.startsWith("faq")) return { ...field, group: "faq" };
     if (name.startsWith("meta")) return { ...field, group: "seo" };

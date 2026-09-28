@@ -25,6 +25,7 @@ import { LeafDecoration, LeafMark } from "@/components/ui/LeafDecoration";
 import { RoundedImage } from "@/components/ui/RoundedImage";
 import { MapBlock } from "@/components/ui/MapBlock";
 import { DoctorBadge } from "@/components/ui/DoctorBadge";
+import { InstagramFeed } from "@/components/ui/InstagramFeed";
 
 const serviceIcons = [
   IconStethoscope,
@@ -211,6 +212,9 @@ export function HomeView() {
           </Container>
         </section>
       ) : null}
+
+      {/* Instagram */}
+      <InstagramFeed posts={t.home.instagramPosts} />
 
       {/* Appointment + Map */}
       <section className="pb-20 md:pb-28">

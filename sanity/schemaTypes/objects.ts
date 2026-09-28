@@ -254,6 +254,32 @@ export const navItem = defineType({
   },
 });
 
+export const instagramPost = defineType({
+  name: "instagramPost",
+  title: "Publication Instagram",
+  type: "object",
+  fields: [
+    defineField({
+      name: "url",
+      title: "Lien de la publication",
+      type: "string",
+      description: "Copier le lien d'une publication ou d'un reel public (bouton Partager > Copier le lien sur Instagram).",
+      validation: (Rule) =>
+        Rule.required().custom((value) =>
+          typeof value === "string" && /instagram\.com\/(p|reel)\//.test(value)
+            ? true
+            : "Doit être un lien de publication ou de reel Instagram (contenant /p/ ou /reel/).",
+        ),
+    }),
+  ],
+  preview: {
+    select: { subtitle: "url" },
+    prepare({ subtitle }: { subtitle?: string }) {
+      return { title: "Publication Instagram", subtitle };
+    },
+  },
+});
+
 export const itemList = (name: string, title: string, ofType: string) =>
   defineField({
     name,
