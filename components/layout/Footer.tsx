@@ -44,7 +44,7 @@ export function Footer() {
                   href="/patientes-etranger"
                   className="text-sm text-text-muted transition-colors hover:text-green"
                 >
-                  {locale === "fr" ? "Patientes de l&apos;étranger" : "Patients from abroad"}
+                  {locale === "fr" ? "Patientes de l'étranger" : "Patients from abroad"}
                 </Link>
               </li>
             </ul>
