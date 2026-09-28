@@ -13,8 +13,25 @@ const vercelProductionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   : undefined;
 
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || vercelProductionUrl || "http://localhost:3000";
+/** The custom domain's apex redirects to www (Vercel domain config), so the
+ * canonical/sitemap/OG URLs must use www too — otherwise they'd point at a
+ * URL that immediately redirects elsewhere. Normalize regardless of what
+ * NEXT_PUBLIC_SITE_URL happens to be set to in the Vercel project settings. */
+function withWww(url: string): string {
+  try {
+    const parsed = new URL(url);
+    if (parsed.hostname === "drkenzabenboubker.ma") {
+      parsed.hostname = "www.drkenzabenboubker.ma";
+    }
+    return parsed.toString().replace(/\/$/, "");
+  } catch {
+    return url;
+  }
+}
+
+export const SITE_URL = withWww(
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || vercelProductionUrl || "http://localhost:3000",
+);
 
 /** Real photo of Dr Kenza Benboubker, used as the default social share / JSON-LD image. */
 export const DEFAULT_SHARE_IMAGE =
