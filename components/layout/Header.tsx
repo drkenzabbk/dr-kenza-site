@@ -2,21 +2,25 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { IconMenu2, IconX } from "@tabler/icons-react";
+import { IconChevronDown, IconMenu2, IconX } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { NAV_ITEMS } from "@/lib/constants";
 import { Button } from "@/components/ui/Button";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Logo } from "./Logo";
+import { NeedsMenu } from "./NeedsMenu";
+import { NEED_GROUPS, needHref } from "@/lib/needs";
 
 export function Header() {
   const pathname = usePathname();
-  const { t, links } = useLanguage();
+  const { t, links, locale } = useLanguage();
   const [open, setOpen] = useState(false);
+  const [needsOpen, setNeedsOpen] = useState(false);
 
   useEffect(() => {
     setOpen(false);
+    setNeedsOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -50,6 +54,7 @@ export function Header() {
               </Link>
             );
           })}
+          <NeedsMenu />
         </nav>
 
         <div className="hidden items-center gap-2.5 lg:flex">
@@ -91,6 +96,40 @@ export function Header() {
                 </Link>
               );
             })}
+
+            <button
+              type="button"
+              onClick={() => setNeedsOpen((v) => !v)}
+              aria-expanded={needsOpen}
+              className="flex items-center justify-between rounded-xl px-3 py-3 text-base text-text-muted"
+            >
+              {locale === "fr" ? "Vos besoins" : "Your needs"}
+              <IconChevronDown className={`h-4 w-4 transition-transform ${needsOpen ? "rotate-180" : ""}`} stroke={1.8} />
+            </button>
+            {needsOpen ? (
+              <div className="flex flex-col gap-4 px-3 pb-2">
+                {NEED_GROUPS.map((group) => (
+                  <div key={group.label}>
+                    <p className="mb-1.5 text-xs font-semibold tracking-[0.1em] text-gold">
+                      {(locale === "fr" ? group.label : group.labelEn).toUpperCase()}
+                    </p>
+                    <ul className="space-y-1">
+                      {group.needs.map((n) => (
+                        <li key={n.label}>
+                          <Link
+                            href={needHref(n)}
+                            className="block rounded-lg py-1.5 text-sm text-text-muted"
+                          >
+                            {locale === "fr" ? n.label : n.labelEn}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+
             <Button href={links.bookAppointment} className="mt-2 w-full">
               {t.common.bookAppointment}
             </Button>

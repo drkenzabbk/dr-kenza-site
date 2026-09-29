@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import { IconArrowLeft, IconMessageCircle, IconClipboardList, IconHeartHandshake } from "@tabler/icons-react";
 import { useLanguage } from "@/context/LanguageContext";
@@ -13,11 +14,19 @@ import { LeafDecoration, LeafMark } from "@/components/ui/LeafDecoration";
 import { RoundedImage } from "@/components/ui/RoundedImage";
 import { CmsImage } from "@/components/ui/CmsImage";
 import { getTreatmentIcon } from "@/lib/serviceIcons";
+import { slugify } from "@/lib/slugify";
 import type { ServiceDetail } from "@/sanity/lib/content";
 
 export function ServiceDetailView({ service }: { service: ServiceDetail }) {
   const { t, links, locale } = useLanguage();
   const allServicesLabel = locale === "fr" ? "Tous les services" : "All services";
+
+  useEffect(() => {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+    const target = document.getElementById(id);
+    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [service.slug]);
 
   return (
     <>
@@ -110,7 +119,11 @@ export function ServiceDetailView({ service }: { service: ServiceDetail }) {
               {service.treatments.map((item) => {
                 const Icon = getTreatmentIcon(item.icon);
                 return (
-                  <article key={item.title} className="card-soft flex flex-col items-start px-6 py-7">
+                  <article
+                    key={item.title}
+                    id={slugify(item.title)}
+                    className="card-soft scroll-mt-24 flex flex-col items-start px-6 py-7"
+                  >
                     <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-beige-soft text-gold">
                       <Icon className="h-5 w-5" stroke={1.4} />
                     </span>
