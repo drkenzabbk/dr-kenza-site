@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { NAV_ITEMS } from "@/lib/constants";
 import { Button } from "@/components/ui/Button";
-import { LanguageSwitcher } from "./LanguageSwitcher";
 import { Logo } from "./Logo";
 import { NeedsMenu } from "./NeedsMenu";
 import { NEED_GROUPS, needHref } from "@/lib/needs";
@@ -58,14 +57,12 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-2.5 lg:flex">
-          <LanguageSwitcher />
           <Button href={links.bookAppointment} variant="primary" className="!rounded-xl !py-2.5 !px-4 !text-[0.8125rem]">
             {t.common.bookAppointment}
           </Button>
         </div>
 
         <div className="flex items-center gap-2 lg:hidden">
-          <LanguageSwitcher />
           <button
             type="button"
             className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-white text-green"
