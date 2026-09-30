@@ -391,6 +391,33 @@ function mapBlogSummary(
   };
 }
 
+const BLOG_BY_SERVICE_QUERY = `*[_type == "blogPost" && relatedServiceSlug == $slug] | order(publishedAt desc)`;
+
+/** Blog articles that link back to a given service (for hub-and-spoke internal linking). */
+export const getBlogPostsByService = cache(
+  async (serviceSlug: string, locale: Locale): Promise<BlogPostSummary[]> => {
+    if (!isSanityConfigured) return [];
+    try {
+      const data = await client.fetch<Record<string, unknown>[]>(
+        BLOG_BY_SERVICE_QUERY,
+        { slug: serviceSlug },
+        { next: { revalidate: 30 } },
+      );
+      return data
+        .map((raw) => {
+          const mapped = fromCms(raw, locale);
+          if (!isRecord(mapped) || typeof raw.slug !== "object" || raw.slug === null) return null;
+          const slugValue = (raw.slug as { current?: string }).current;
+          if (!slugValue) return null;
+          return mapBlogSummary(mapped, raw, slugValue);
+        })
+        .filter((v): v is BlogPostSummary => v !== null);
+    } catch {
+      return [];
+    }
+  },
+);
+
 export const getBlogPosts = cache(async (locale: Locale): Promise<BlogPostSummary[]> => {
   if (!isSanityConfigured) return [];
   try {

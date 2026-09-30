@@ -2,7 +2,13 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { IconArrowLeft, IconMessageCircle, IconClipboardList, IconHeartHandshake } from "@tabler/icons-react";
+import {
+  IconArrowLeft,
+  IconArrowRight,
+  IconMessageCircle,
+  IconClipboardList,
+  IconHeartHandshake,
+} from "@tabler/icons-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -15,9 +21,15 @@ import { RoundedImage } from "@/components/ui/RoundedImage";
 import { CmsImage } from "@/components/ui/CmsImage";
 import { getTreatmentIcon } from "@/lib/serviceIcons";
 import { slugify } from "@/lib/slugify";
-import type { ServiceDetail } from "@/sanity/lib/content";
+import type { BlogPostSummary, ServiceDetail } from "@/sanity/lib/content";
 
-export function ServiceDetailView({ service }: { service: ServiceDetail }) {
+export function ServiceDetailView({
+  service,
+  relatedArticles = [],
+}: {
+  service: ServiceDetail;
+  relatedArticles?: BlogPostSummary[];
+}) {
   const { t, links, locale } = useLanguage();
   const allServicesLabel = locale === "fr" ? "Tous les services" : "All services";
 
@@ -202,6 +214,38 @@ export function ServiceDetailView({ service }: { service: ServiceDetail }) {
                   <CmsImage src={service.galleryImage2} alt={service.galleryImage2Alt || service.heroTitle} sizes="(max-width:768px) 100vw, 50vw" />
                 </div>
               ) : null}
+            </div>
+          </Container>
+        </section>
+      ) : null}
+
+      {/* Related articles */}
+      {relatedArticles.length > 0 ? (
+        <section className="pb-20 md:pb-28">
+          <Container>
+            <SectionHeading
+              title={locale === "fr" ? "Pour aller plus loin" : "Learn more"}
+              align="center"
+              className="mb-10"
+            />
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {relatedArticles.map((post) => (
+                <Link
+                  key={post.slug}
+                  href={`/informations/${post.slug}`}
+                  className="card-soft group flex flex-col px-6 py-6"
+                >
+                  <p className="text-[0.7rem] font-medium tracking-[0.14em] text-gold">
+                    {post.category}
+                  </p>
+                  <h3 className="mt-2 font-serif text-lg text-green">{post.title}</h3>
+                  <p className="prose-body mt-2 flex-1 text-sm">{post.excerpt}</p>
+                  <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-green">
+                    {locale === "fr" ? "Lire l'article" : "Read the article"}
+                    <IconArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </span>
+                </Link>
+              ))}
             </div>
           </Container>
         </section>

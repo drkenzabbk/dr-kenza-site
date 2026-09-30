@@ -44,12 +44,41 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const content = await getSiteContent();
   const { siteName, description, ogImageUrl } = content.translations.fr.meta;
-  const { testimonials } = content.translations.fr.home;
   const links = content.links;
+  const image = ogImageUrl || DEFAULT_SHARE_IMAGE;
+
+  const address = {
+    "@type": "PostalAddress",
+    streetAddress: "Crystal Office 1, Immeuble B, Bureau 20 (RDC), Résidence Andalous 5",
+    addressLocality: "Bouskoura",
+    addressRegion: "Casablanca-Settat",
+    addressCountry: "MA",
+  };
+
+  // Real coordinates of the practice, per its Google Business Profile listing.
+  const geo = {
+    "@type": "GeoCoordinates",
+    latitude: 33.4654826,
+    longitude: -7.6454193,
+  };
+
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "MedicalOrganization",
+    "@id": `${SITE_URL}/#organization`,
+    name: "Cabinet Dr Kenza Benboubker",
+    url: SITE_URL,
+    logo: image,
+    image,
+    telephone: links.phoneHref?.replace("tel:", ""),
+    address,
+    geo,
+  };
 
   const physicianJsonLd = {
     "@context": "https://schema.org",
     "@type": "Physician",
+    "@id": `${SITE_URL}/#physician`,
     name: siteName,
     description,
     medicalSpecialty: [
@@ -57,7 +86,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       "https://schema.org/Endocrine",
       "https://schema.org/Dermatology",
     ],
-    image: ogImageUrl || DEFAULT_SHARE_IMAGE,
+    image,
     url: SITE_URL,
     identifier: {
       "@type": "PropertyValue",
@@ -65,26 +94,11 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       value: "31262",
     },
     telephone: links.phoneHref?.replace("tel:", ""),
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Crystal Office 1, Immeuble B, Bureau 20 (RDC), Résidence Andalous 5",
-      addressLocality: "Bouskoura",
-      addressRegion: "Casablanca-Settat",
-      addressCountry: "MA",
-    },
+    address,
+    geo,
     areaServed: ["Bouskoura", "Casablanca"],
     sameAs: [links.instagram].filter(Boolean),
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5.0",
-      reviewCount: "7",
-    },
-    review: testimonials.map((t) => ({
-      "@type": "Review",
-      author: { "@type": "Person", name: t.author },
-      reviewRating: { "@type": "Rating", ratingValue: t.rating, bestRating: 5 },
-      reviewBody: t.quote,
-    })),
+    worksFor: { "@id": `${SITE_URL}/#organization` },
     openingHoursSpecification: [
       {
         "@type": "OpeningHoursSpecification",
@@ -104,6 +118,11 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html lang="fr" className={`${dmSans.variable} ${cormorant.variable} h-full`}>
       <body className="min-h-full font-sans antialiased">
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger

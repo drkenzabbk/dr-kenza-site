@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getServiceDetail, getServiceSlugs, getSiteContent } from "@/sanity/lib/content";
+import {
+  getBlogPostsByService,
+  getServiceDetail,
+  getServiceSlugs,
+  getSiteContent,
+} from "@/sanity/lib/content";
 import { SITE_URL, DEFAULT_SHARE_IMAGE } from "@/lib/seo";
 import { ServiceDetailView } from "./ServiceDetailView";
 
@@ -28,13 +33,18 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
 export default async function Page({ params }: Params) {
   const { slug } = await params;
-  const service = await getServiceDetail(slug, "fr");
+  const [service, relatedArticles] = await Promise.all([
+    getServiceDetail(slug, "fr"),
+    getBlogPostsByService(slug, "fr"),
+  ]);
   if (!service) notFound();
+
+  const fullTitle = [service.heroTitle, service.heroTitleAccent].filter(Boolean).join(" ");
 
   const serviceJsonLd = {
     "@context": "https://schema.org",
     "@type": "MedicalProcedure",
-    name: service.heroTitle,
+    name: fullTitle,
     description: service.metaDescription || service.heroText,
     url: `${SITE_URL}/services/${slug}`,
     image: service.heroImage || DEFAULT_SHARE_IMAGE,
@@ -43,6 +53,16 @@ export default async function Page({ params }: Params) {
       name: "Dr Kenza Benboubker",
       url: SITE_URL,
     },
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Services", item: `${SITE_URL}/services` },
+      { "@type": "ListItem", position: 3, name: fullTitle, item: `${SITE_URL}/services/${slug}` },
+    ],
   };
 
   const faqJsonLd =
@@ -65,6 +85,11 @@ export default async function Page({ params }: Params) {
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceJsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {faqJsonLd ? (
         <script
           type="application/ld+json"
@@ -72,7 +97,7 @@ export default async function Page({ params }: Params) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       ) : null}
-      <ServiceDetailView service={service} />
+      <ServiceDetailView service={service} relatedArticles={relatedArticles} />
     </>
   );
 }

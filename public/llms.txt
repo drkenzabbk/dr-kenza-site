@@ -1,0 +1,19 @@
+# Dr Kenza Benboubker — Cabinet Médical
+
+> Médecin généraliste, médecine esthétique, diabétologie, hijama pour femme. Bouskoura, Casablanca, Maroc. N° d'inscription à l'Ordre National des Médecins du Maroc : 31262.
+
+## Cabinet
+
+- [Accueil](https://www.drkenzabenboubker.ma/): Présentation du Dr Kenza Benboubker, médecin généraliste, esthétique et diabétologue à Bouskoura, Casablanca
+- [À propos](https://www.drkenzabenboubker.ma/a-propos): Parcours et approche de la Dr Kenza Benboubker
+- [Services](https://www.drkenzabenboubker.ma/services): Vue d'ensemble des 4 domaines de soins
+- [Médecine générale](https://www.drkenzabenboubker.ma/services/medecine-generale): Consultations, échographies, ECG, bilans de santé, certificats médicaux
+- [Médecine esthétique](https://www.drkenzabenboubker.ma/services/medecine-esthetique): Botox, acide hyaluronique, PRP, laser, peeling, mésothérapie, micro-needling
+- [Diabétologie](https://www.drkenzabenboubker.ma/services/diabetologie): Dépistage, suivi personnalisé, éducation thérapeutique
+- [Hijama](https://www.drkenzabenboubker.ma/services/hijama): Hijama traditionnelle réservée aux femmes
+- [Patientes de l'étranger](https://www.drkenzabenboubker.ma/patientes-etranger): Organiser ses soins depuis l'étranger avant un séjour au Maroc
+- [Contact](https://www.drkenzabenboubker.ma/contact): Adresse, horaires, prise de rendez-vous par WhatsApp
+
+## Informations patients (FAQ et articles)
+
+Articles répondant aux questions fréquentes sur le diabète, la médecine esthétique et la hijama — liste complète et à jour dans le [sitemap](https://www.drkenzabenboubker.ma/sitemap.xml).

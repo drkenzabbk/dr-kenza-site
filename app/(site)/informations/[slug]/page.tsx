@@ -37,22 +37,34 @@ export default async function Page({ params }: Params) {
 
   const articleJsonLd = {
     "@context": "https://schema.org",
-    "@type": "MedicalWebPage",
+    "@type": ["MedicalWebPage", "BlogPosting"],
     headline: post.title,
     description: post.metaDescription || post.excerpt,
     ...(post.publishedAt ? { datePublished: post.publishedAt } : {}),
     image: post.image || DEFAULT_SHARE_IMAGE,
     url: `${SITE_URL}/informations/${slug}`,
+    mainEntityOfPage: `${SITE_URL}/informations/${slug}`,
     author: {
       "@type": "Physician",
       name: "Dr Kenza Benboubker",
       url: SITE_URL,
     },
     publisher: {
-      "@type": "Physician",
-      name: "Dr Kenza Benboubker",
+      "@type": "Organization",
+      name: "Cabinet Dr Kenza Benboubker",
       url: SITE_URL,
+      logo: { "@type": "ImageObject", url: DEFAULT_SHARE_IMAGE },
     },
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Accueil", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Informations", item: `${SITE_URL}/informations` },
+      { "@type": "ListItem", position: 3, name: post.title, item: `${SITE_URL}/informations/${slug}` },
+    ],
   };
 
   const faqJsonLd =
@@ -74,6 +86,11 @@ export default async function Page({ params }: Params) {
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       {faqJsonLd ? (
         <script
